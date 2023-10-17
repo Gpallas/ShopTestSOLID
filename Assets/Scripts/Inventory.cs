@@ -3,41 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//TODO: Mudar Os Item pra ItemClass e talvez fazer com que os Gets devolvam uma cópia, não uma referência
+
 public class Inventory : MonoBehaviour, IInventoryAccess
 {
     List<Item> itemList;
-    int listSize;
+    int listSize = 16;
+
+    public Item[] testItems;
 
     // Start is called before the first frame update
     void Start()
     {
         //This should be called on a load from somewhere
-        InitializeInventory();
+        //InitializeInventory();
+        InitializeInventory(testItems);
     }
 
     void InitializeInventory()
     {
         itemList = new List<Item>(listSize);
+
+        for (int i = 0; i < listSize; i++)
+        {
+            itemList.Add(null);
+        }
     }
 
     void InitializeInventory(Item[] items)
     {
-        itemList = new List<Item>(listSize);
-        itemList.AddRange(items);
+        InitializeInventory();
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            itemList[i] = items[i];
+        }
     }
 
     public Item GetItemAtIndex(int index)
     {
         if (IsListIndexValid(index))
         {
-            return itemList[index];
+            return new Item(itemList[index]);
+        }
+        return null;
+    }
+
+    public Item GetItem(Item itemRef)
+    {
+        if (itemList.Contains(itemRef))
+        {
+            return new Item(itemList[itemList.IndexOf(itemRef)]);
         }
         return null;
     }
 
     public List<Item> GetItemList()
     {
-        return itemList;
+        return new List<Item>(itemList);
     }
 
     /// <summary>
@@ -52,7 +75,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         int itemIndex = itemList.IndexOf(itemToAdd);
         if (IsListIndexValid(itemIndex))
         {
-            if (itemList[itemIndex] == itemToAdd && itemToAdd.stackable)
+            if (itemList[itemIndex].Equals(itemToAdd) && itemToAdd.data.stackable)
             {
                 int leftovers = itemList[itemIndex].AddAmount(itemToAdd.amount);
                 if (leftovers > 0)
@@ -63,6 +86,10 @@ public class Inventory : MonoBehaviour, IInventoryAccess
                         return 0;
                     }
                     return leftovers;
+                }
+                else
+                {
+                    return 0;
                 }
             }
         }
@@ -89,10 +116,10 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         {
             if (itemList[index] == null)
             {
-                itemList[index] = itemToAdd;
+                itemList[index] = new Item(itemToAdd);
                 return 0;
             }
-            else if (itemList[index] == itemToAdd && itemToAdd.stackable)
+            else if (itemList[index].Equals(itemToAdd) && itemToAdd.data.stackable)
             {
                 return itemList[index].AddAmount(itemToAdd.amount);
             }
@@ -113,7 +140,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         {
             if (itemList[i] == null)
             {
-                itemList[i] = itemToAdd;
+                itemList[i] = new Item(itemToAdd);
                 return true;
             }
         }

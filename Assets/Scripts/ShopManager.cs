@@ -17,6 +17,7 @@ public class ShopManager : MonoBehaviour
     {
         // Find Shopkeepers and register OpenMenu in their delegates
     }
+
     void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage)
     {
         playerInventory = playerInvInterface;
@@ -24,8 +25,8 @@ public class ShopManager : MonoBehaviour
         playerGold = goldInterface;
 
         shopUIRef.FillBaseInfo(shopkeeperSprite, shopkeeperMessage, playerGold.GetCurrentGold());
-        shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory.GetItemList());
-        shopUIRef.PopulatePlayerMenu(playerInventory.GetItemList());
+        shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory);
+        shopUIRef.PopulatePlayerMenu(playerInventory);
         shopUIRef.SwitchVisibility(/*newVisibility = */true);
     }
 
@@ -59,21 +60,21 @@ public class ShopManager : MonoBehaviour
 
     }
 
-    void BuyItem(int itemIndex, int quantity)
+    void BuyItem(Item itemToBuy)//int itemIndex, int quantity)
     {
-        Item aux = shopkeeperInventory.GetItemAtIndex(itemIndex);
+        //Item aux = itemToBuy;//shopkeeperInventory.GetItemAtIndex(itemIndex);
 
-        bool wasSold = aux.wasSold;
+        bool wasSold = /*aux*/itemToBuy.data.wasSold;
 
         //Check if player has gold to buy one item
-        if (playerGold.CheckHasEnoughGold(aux.goldValue))
+        if (playerGold.CheckHasEnoughGold(/*aux*/itemToBuy.data.goldValue))
         {
             //If player can buy the item at all, check if they have enough gold for the quantity they wanted. If not, switch to max they can afford
-            quantity = (playerGold.CheckHasEnoughGold(aux.goldValue)) ? quantity : playerGold.GetCurrentGold()/aux.goldValue;
-            aux.amount = quantity;
+            int quantity = (playerGold.CheckHasEnoughGold(/*aux*/itemToBuy.data.goldValue */*quantity*/itemToBuy.amount)) ? /*quantity*/itemToBuy.amount : playerGold.GetCurrentGold()/itemToBuy.data.goldValue;
+            /*aux*/itemToBuy.amount = quantity;
 
             //Try to add item to inventory
-            int result = playerInventory.AddItem(aux);
+            int result = playerInventory.AddItem(/*aux*/itemToBuy);
 
             if (result < 0)
             {
@@ -83,12 +84,12 @@ public class ShopManager : MonoBehaviour
             //Success. Play "success" sound effect
 
             int quantityBought = quantity - result;
-            playerGold.RemoveGold(aux.goldValue * quantityBought);
+            playerGold.RemoveGold(/*aux*/itemToBuy.data.goldValue * quantityBought);
 
             //TODO: Remove item from shopkeeper list IF it was an item sold by the player and rebought
             if (wasSold)
             {
-                shopkeeperInventory.RemoveItemAmount(itemIndex, quantityBought);
+                shopkeeperInventory.RemoveItemAmount(/*aux*/itemToBuy, quantityBought);
             }
 
             //Update menus
@@ -97,10 +98,12 @@ public class ShopManager : MonoBehaviour
         }
     }
 
-    void SellItem(int itemIndex, int quantity)
+    void SellItem(Item itemToSell)//int itemIndex, int quantity)
     {
-        Item aux = playerInventory.GetItemAtIndex(itemIndex);
-        int result = playerInventory.RemoveItemAmount(aux, quantity);
+        int priorQuantity = playerInventory.GetItem(itemToSell).amount;
+
+        //Item aux = itemToSell;//playerInventory.GetItemAtIndex(itemIndex);
+        int result = playerInventory.RemoveItemAmount(/*aux*/itemToSell, /*quantity*/itemToSell.amount);
 
         if (result < 0)
         {
@@ -109,13 +112,13 @@ public class ShopManager : MonoBehaviour
         }
         //Success. Play "success" sound effect
 
-        int quantitySold = (result == 0) ? aux.amount : quantity; 
-        playerGold.AddGold(aux.goldValue * quantitySold);
+        int quantitySold = (result == 0) ? /*aux.amount*/priorQuantity : /*quantity*/itemToSell.amount;
+        playerGold.AddGold(/*aux*/itemToSell.data.goldValue * quantitySold);
 
         //TODO: Make items sold by the player appear as a separate item on the list that could be rebought in case of accidentally selling
-        aux.amount = quantitySold;
-        aux.wasSold = true;
-        shopkeeperInventory.AddItemToFirstEmptySlot(aux);
+        /*aux*/itemToSell.amount = quantitySold;
+        /*aux*/itemToSell.data.wasSold = true;
+        shopkeeperInventory.AddItemToFirstEmptySlot(/*aux*/itemToSell);
 
         //Update menus
         shopUIRef.RefreshPlayerItems(playerInventory.GetItemList());
@@ -128,12 +131,12 @@ public class ShopManager : MonoBehaviour
         if (isShopkeeper)
         {
             Item aux = shopkeeperInventory.GetItemAtIndex(itemIndex);
-            popUpRef.ShowInfo(aux.itemName, aux.category.ToString(), aux.description, aux.goldValue.ToString());
+            popUpRef.ShowInfo(aux.data.itemName, aux.data.category.ToString(), aux.data.description, aux.data.goldValue.ToString());
         }
         else
         {
             Item aux = playerInventory.GetItemAtIndex(itemIndex);
-            popUpRef.ShowInfo(aux.itemName, aux.amount, aux.goldValue.ToString());
+            popUpRef.ShowInfo(aux.data.itemName, aux.amount, aux.data.goldValue.ToString());
         }
     }
 

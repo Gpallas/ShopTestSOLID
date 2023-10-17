@@ -5,6 +5,7 @@ using UnityEngine;
 public interface IInventoryAccess
 {
     Item GetItemAtIndex(int index);
+    Item GetItem(Item itemRef);
 
     List<Item> GetItemList();
 

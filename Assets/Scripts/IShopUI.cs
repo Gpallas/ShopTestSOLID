@@ -4,11 +4,11 @@ using UnityEngine;
 
 public interface IShopUI
 {
-    void PopulateShopkeeperMenu(List<Item> itemList);
+    void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv/*List<Item> itemList*/);
 
-    void PopulatePlayerMenu(List<Item> itemList);
+    void PopulatePlayerMenu(IInventoryAccess playerInv/*List<Item> itemList*/);
 
-    void FillBaseInfo(Sprite shopkeeperSprite, string shopkeeperMessage, int playerGold);
+    void FillBaseInfo(Sprite shopkeeperSprite, string shopkeeperString, int playerGold);
 
     void RefreshShopkeeperItems(List<Item> itemList);
 
