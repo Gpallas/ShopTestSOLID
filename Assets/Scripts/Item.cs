@@ -1,70 +1,51 @@
 ﻿using System;
-using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Collections;
-using UnityEngine;
-using static ItemData;
 
 [Serializable]
 public class Item
 {
-    /*public Sprite image;
-    public string itemName;
-    public string description;
-    public int goldValue;
-    public bool canSell;
-    public bool wasSold;
-
-    public ItemCategory category;
-
-    public bool stackable = true;
-    public int amount;
-    public int stackLimit;
-
-    public BasePopUpConstructor constructorRef;
-
-    ItemClass(Sprite image, string itemName, string description, int goldValue, bool canSell, bool wasSold, ItemCategory category, bool stackable, int amount, int stackLimit, BasePopUpConstructor constructorRef)
-    {
-        this.image = image;
-        this.itemName = itemName;
-        this.description = description;
-        this.goldValue = goldValue;
-        this.canSell = canSell;
-        this.wasSold = wasSold;
-        this.category = category;
-        this.stackable = stackable;
-        this.amount = amount;
-        this.stackLimit = stackLimit;
-        this.constructorRef = constructorRef;
-    }
-
-    ItemClass (Item itemRef)
-    {
-        this.image = itemRef.image;
-        this.itemName = itemRef.itemName;
-        this.description = itemRef.description;
-        this.goldValue = itemRef.goldValue;
-        this.canSell = itemRef.canSell;
-        this.wasSold = itemRef.wasSold;
-        this.category = itemRef.category;
-        this.stackable = itemRef.stackable;
-        this.amount = itemRef.amount;
-        this.stackLimit = itemRef.stackLimit;
-        this.constructorRef = itemRef.constructorRef;
-    }*/
-
     public ItemData data;
     public int amount;
-
-    public Item(ItemData itemRef, int amountRef)
+    public bool wasSold;
+    public int id = -1;
+    
+    public Item()
     {
-        data = itemRef;
-        amount = amountRef;
+        data = null;
+        amount = -1;
+        wasSold = false;
+        id = -1;
     }
 
-    public Item(Item classRef)
+    public Item(ItemData dataRef)
     {
-        data = classRef.data;
-        amount = classRef.amount;
+        data = dataRef;
+        amount = 1;
+        wasSold = false;
+        id = -1;
+    }
+
+    public Item(ItemData dataRef, int amountRef, bool sold, int idRef)
+    {
+        data = dataRef;
+        amount = amountRef;
+        wasSold = sold;
+        id = idRef;
+    }
+
+    public Item(Item itemRef)
+    {
+        data = itemRef.data;
+        amount = itemRef.amount;
+        wasSold = itemRef.wasSold;
+        id = itemRef.id;
+    }
+
+    public Item(Item itemRef, int idRef)
+    {
+        data = itemRef.data;
+        amount = itemRef.amount;
+        wasSold = itemRef.wasSold;
+        id = idRef;
     }
 
     public int AddAmount(int amountToAdd)
@@ -104,7 +85,7 @@ public class Item
         else
         {
             Item i = (Item)other;
-            return (data.itemName == i.data.itemName);
+            return (data.itemName == i.data.itemName) && (id == i.id);
         }
     }
 

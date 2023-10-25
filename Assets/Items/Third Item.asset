@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dd3f1358c9ffe945bd960e67f319ab5, type: 3}
-  m_Name: New Item
+  m_Name: Third Item
   m_EditorClassIdentifier: 
-  image: {fileID: -7325896122416227374, guid: 9f510b71574005848a89186b94d833c4, type: 3}
-  itemName: New Item
-  description: Some quick description
-  goldValue: 34
+  image: {fileID: 6187108816858757141, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  itemName: Shoes
+  description: Shoes to walk around
+  goldValue: 50
   canSell: 1
   category: 0
   stackable: 1
-  stackLimit: 50
-  constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}
+  stackLimit: 4
+  constructorRef: {fileID: 11400000, guid: 87d14a2aae5839e44889f813953857e1, type: 2}

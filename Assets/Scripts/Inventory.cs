@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 
 //TODO: Mudar Os Item pra ItemClass e talvez fazer com que os Gets devolvam uma cópia, não uma referência
 
@@ -20,7 +21,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         InitializeInventory(testItems);
     }
 
-    void InitializeInventory()
+    public void InitializeInventory()
     {
         itemList = new List<Item>(listSize);
 
@@ -44,7 +45,10 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     {
         if (IsListIndexValid(index))
         {
-            return new Item(itemList[index]);
+            if (itemList[index] != null)
+            {
+                return new Item(itemList[index]);
+            }
         }
         return null;
     }
@@ -58,9 +62,24 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         return null;
     }
 
+    public Item GetItemWithData(ItemData dataRef)
+    {
+        int aux = IndexOfFirst(dataRef);
+        if (IsListIndexValid(aux))
+        {
+            return itemList[aux];
+        }
+        return null;
+    }
+
     public List<Item> GetItemList()
     {
         return new List<Item>(itemList);
+    }
+
+    public int GetListCount()
+    {
+        return itemList.Count;
     }
 
     /// <summary>
@@ -70,37 +89,44 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     /// <returns>
     /// Returns -1 if failed to add item. Returns 0 if added successfully. Otherwise, returns amount over stack limit
     /// </returns>
-    public int AddItem(Item itemToAdd)
+    public int TryToAddItem(Item itemToAdd)
     {
-        int itemIndex = itemList.IndexOf(itemToAdd);
+        int itemIndex = IndexOfFirstAvailable(itemToAdd.data);
         if (IsListIndexValid(itemIndex))
         {
-            if (itemList[itemIndex].Equals(itemToAdd) && itemToAdd.data.stackable)
+            if (itemToAdd.data.stackable)
             {
                 int leftovers = itemList[itemIndex].AddAmount(itemToAdd.amount);
                 if (leftovers > 0)
                 {
                     itemToAdd.amount = leftovers;
-                    if (AddItemToFirstEmptySlot(itemToAdd))
-                    {
-                        return 0;
-                    }
-                    return leftovers;
+                    return AddItemToFirstEmptySlot(itemToAdd);
                 }
                 else
                 {
                     return 0;
                 }
             }
+            else
+            {
+                return AddItemToFirstEmptySlot(itemToAdd);
+            }
         }
         else
         {
-            if (AddItemToFirstEmptySlot(itemToAdd))
+            int leftovers = itemToAdd.amount;
+            int result = AddItemToFirstEmptySlot(itemToAdd);
+
+            //If couldn't find an open slot, no item was added. Return -1
+            if (result == leftovers)
             {
-                return 0;
+                return -1;
+            }
+            else
+            {
+                return result;
             }
         }
-        return -1;
     }
 
     /// <summary>
@@ -110,7 +136,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     /// <returns>
     /// Returns -1 if failed to add item. Returns 0 if added successfully. Otherwise, returns amount over stack limit
     /// </returns>
-    public int AddItemToIndex(Item itemToAdd, int index)
+    int AddItemToIndex(Item itemToAdd, int index)
     {
         if (IsListIndexValid(index))
         {
@@ -119,7 +145,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
                 itemList[index] = new Item(itemToAdd);
                 return 0;
             }
-            else if (itemList[index].Equals(itemToAdd) && itemToAdd.data.stackable)
+            else if (itemList[index].data.Equals(itemToAdd.data) && itemToAdd.data.stackable)
             {
                 return itemList[index].AddAmount(itemToAdd.amount);
             }
@@ -134,20 +160,33 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     /// <returns>
     /// Returns true if able to add item. False if there was no open slot
     /// </returns>
-    public bool AddItemToFirstEmptySlot(Item itemToAdd)
+    int AddItemToFirstEmptySlot(Item itemToAdd)
     {
+        int leftovers = itemToAdd.amount;
         for (int i=0; i<itemList.Count; i++)
         {
             if (itemList[i] == null)
             {
-                itemList[i] = new Item(itemToAdd);
-                return true;
+                leftovers = (itemToAdd.amount > itemToAdd.data.stackLimit) ? itemToAdd.amount - itemToAdd.data.stackLimit : 0;
+                itemToAdd.amount -= leftovers;
+
+                itemList[i] = new Item(itemToAdd, i);
+                
+                if (leftovers > 0)
+                {
+                    itemToAdd.amount = leftovers;
+                    return AddItemToFirstEmptySlot(itemToAdd);
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
-        return false;
+        return leftovers;
     }
 
-    public void RemoveItem(Item itemToRemove)
+    void RemoveItem(Item itemToRemove)
     {
         int itemIndex = itemList.IndexOf(itemToRemove);
         if (IsListIndexValid(itemIndex))
@@ -157,14 +196,11 @@ public class Inventory : MonoBehaviour, IInventoryAccess
                 RemoveItem(itemIndex);
             }
         }
-        //itemList[itemList.IndexOf(itemToRemove)] = null;
-        //itemList.Remove(itemToRemove);
     }
 
-    public void RemoveItem(int itemIndex)
+    void RemoveItem(int itemIndex)
     {
         itemList[itemIndex] = null;
-        //itemList.RemoveAt(itemIndex);
     }
 
     /// <summary>
@@ -180,11 +216,6 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         int itemIndex = itemList.IndexOf(itemToRemove);
 
         return RemoveItemAmount(itemIndex, amountToRemove);
-        //if (IsListIndexValid(itemIndex))
-        //{
-        //    return (itemList[itemIndex].RemoveAmount(amountToRemove)) ? 1 : 0;
-        //}
-        //return -1;
     }
 
     /// <summary>
@@ -195,18 +226,21 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     /// <returns>
     /// Returns -1 if item index not valid. Returns 0 if no amount was left. Otherwise, returns amount left
     /// </returns>
-    public int RemoveItemAmount(int itemIndex, int amountToRemove)
+    int RemoveItemAmount(int itemIndex, int amountToRemove)
     {
         if (IsListIndexValid(itemIndex))
         {
-            int aux = (itemList[itemIndex].RemoveAmount(amountToRemove)) ? itemList[itemIndex].amount : 0;
-
-            if (aux == 0)
+            if (itemList[itemIndex] != null)
             {
-                RemoveItem(itemIndex);
-            }
+                int aux = (itemList[itemIndex].RemoveAmount(amountToRemove)) ? itemList[itemIndex].amount : 0;
 
-            return aux;
+                if (aux == 0)
+                {
+                    RemoveItem(itemIndex);
+                }
+
+                return aux;
+            }
         }
         return -1;
     }
@@ -224,5 +258,35 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     bool IsListIndexValid(int itemIndex)
     {
         return (itemIndex >= 0 && itemIndex < itemList.Count);
+    }
+
+    int IndexOfFirst(ItemData dataRef)
+    {
+        for (int i=0; i<itemList.Count; i++)
+        {
+            if (itemList[i] != null)
+            {
+                if (dataRef == itemList[i].data)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
+    int IndexOfFirstAvailable(ItemData dataRef)
+    {
+        for (int i=0; i<itemList.Count; i++)
+        {
+            if (itemList[i] != null)
+            {
+                if (dataRef == itemList[i].data && itemList[i].amount < dataRef.stackLimit)
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 }

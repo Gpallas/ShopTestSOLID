@@ -21,11 +21,16 @@ public class ShopkeeperUIItem : UIItem
         image.sprite = item.data.image;
         itemName.text = item.data.itemName;
         itemCost.text = item.data.goldValue.ToString();
-        if (item.data.wasSold)
+        if (item.wasSold)
         {
             resellIcon.SetActive(true);
             itemAmount.text = item.amount.ToString();
             itemAmount.gameObject.SetActive(true);
+        }
+        else
+        {
+            resellIcon.SetActive(false);
+            itemAmount.gameObject.SetActive(false);
         }
     }
 }

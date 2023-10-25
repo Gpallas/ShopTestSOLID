@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitActionItem, IUpdateItem
+public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitActionItem, IUpdateItem
 {
     const string SingleSubmit = "SubmitSingle";
     const string MultipleSubmit = "SubmitMultipleSingle";
@@ -23,11 +23,11 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
         {
             { SingleSubmit, OnSubmitSingle },
             { MultipleSubmit, OnSubmitMultiple },
-            { AllSubmit, OnSubmitAll },
-            { MultipleAllSubmit, OnSubmitAll }
+            { AllSubmit, OnSubmitSingle },
+            { MultipleAllSubmit, OnSubmitMultiple }
         };
 
-        onDeselect += StopAllCoroutines;
+        onDeselect += StopAll;
         allCoroutines = new Dictionary<string, Coroutine>();
     }
 
@@ -38,30 +38,20 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     int MultipleItemAmount()
     {
-        return  Mathf.CeilToInt((float)item.amount / 2f);
-    }
-
-    int AllItemAmount()
-    {
-        return item.data.stackLimit;
+        return 5;
     }
 
     protected override void HandleInputActionAlreadyActive(InputActionPhase currentPhase, string inputActionName)
     {
         Func<int> GetAmount;
 
-        if (inputActionName == SingleSubmit)
+        if (inputActionName == SingleSubmit || inputActionName == AllSubmit)
         {
             GetAmount = SingleItemAmount;
         }
-        else if (inputActionName == MultipleSubmit)
+        else if (inputActionName == MultipleSubmit || inputActionName == MultipleAllSubmit)
         {
             GetAmount = MultipleItemAmount;
-        }
-        else if (inputActionName == AllSubmit || inputActionName == MultipleAllSubmit)
-        {
-            return;
-            //GetAmount = AllItemAmount;
         }
         else
         {
@@ -69,7 +59,7 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
             return;
         }
 
-        if (currentPhase == InputActionPhase.Started)// || (currentPhase == InputActionPhase.Performed && (inputActionName == AllSubmit || inputActionName == MultipleAllSubmit)))
+        if (currentPhase == InputActionPhase.Started)
         {
             SubmitStart(GetAmount());
         }
@@ -111,14 +101,6 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
         }
     }
 
-    void OnSubmitAll(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            SubmitStart(AllItemAmount());
-        }
-    }
-
     void SubmitStart(int amount)
     {
         item.amount = amount;
@@ -148,12 +130,21 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
     IEnumerator SubmitLoop(Func<int> GetAmount)
     {
         yield return new WaitForSeconds(0.5f);
-        while(true)
+        while (true)
         {
             item.amount = GetAmount();
             onSubmitAction?.Invoke(item);
             yield return new WaitForSeconds(WaitTime);
         }
+    }
+
+    void StopAll()
+    {
+        foreach (KeyValuePair<string, Coroutine> pair in allCoroutines)
+        {
+            StopCoroutine(pair.Value);
+        }
+        allCoroutines.Clear();
     }
 
     public void UpdateItem(Item newItem)

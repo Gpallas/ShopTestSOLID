@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,13 +8,18 @@ using UnityEngine.UI;
 public class ShopUIManager : MonoBehaviour, IShopUI
 {
     [SerializeField]
+    GameObject popUpGO;
+    [SerializeField]
+    GameObject shopManagerGO;
     IPopUpInfo popUpRef;
+    ITradeItem shopManagerRef;
 
     [SerializeField]
-    PlayerShopItemPopUpConstructor playerPopUpConstructor;
-
-    IInventoryAccess playerInventory;
-    IInventoryAccess shopkeeperInventory;
+    GameObject shopUIGameObject;
+    [SerializeField]
+    Transform shopItemParent;
+    [SerializeField]
+    Transform playerItemParent;
 
     [SerializeField]
     Image shopkeeperImage;
@@ -21,50 +27,61 @@ public class ShopUIManager : MonoBehaviour, IShopUI
     TextMeshProUGUI shopkeeperMessage;
     [SerializeField]
     TextMeshProUGUI goldText;
-    [SerializeField]
-    GameObject shopUIGameObject;
 
     [SerializeField]
     GameObject shopItemPrefab;
     [SerializeField]
     GameObject playerItemPrefab;
 
-    //List<ShopItem> shopkeeperItems;
-    //List<UIItem> playerItems;
+    Dictionary<int, GameObject> shopkeeperItems;
+    Dictionary<int, GameObject> playerItems;
 
-    //Dictionary<int, GameObject> shopkeeperItems;
-    //Dictionary<int, GameObject> playerItems;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        popUpGO.TryGetComponent(out popUpRef);
+        shopManagerGO.TryGetComponent(out shopManagerRef);
     }
 
     public void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv)
     {
-        shopkeeperInventory = shopkeeperInv;
+        shopkeeperItems = new Dictionary<int, GameObject>();
 
-        for(int i=0; i<shopkeeperInventory.GetItemList().Count; i++)
+        for(int i=0; i<shopkeeperInv.GetListCount(); i++)
         {
-
+            Item aux = shopkeeperInv.GetItemAtIndex(i);
+            if (aux != null)
+            {
+                InstantiateItem(aux, shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i);
+            }
         }
     }
 
     public void PopulatePlayerMenu(IInventoryAccess playerInv)
     {
-        playerInventory = playerInv;
+        playerItems = new Dictionary<int, GameObject>();
+
+        for (int i = 0; i < playerInv.GetListCount(); i++)
+        {
+            Item aux = playerInv.GetItemAtIndex(i);
+            if (aux != null)
+            {
+                InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i);
+            }
+        }
     }
 
     public void ClearItems()
     {
-        throw new System.NotImplementedException();
+        foreach (KeyValuePair<int, GameObject> g in shopkeeperItems)
+        {
+            Destroy(g.Value);
+        }
+        shopkeeperItems.Clear();
+        foreach (KeyValuePair<int, GameObject> g in playerItems)
+        {
+            Destroy(g.Value);
+        }
+        playerItems.Clear();
     }
 
     public void FillBaseInfo(Sprite shopkeeperSprite, string shopkeeperString, int playerGold)
@@ -74,16 +91,64 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         UpdateGoldValue(playerGold);
     }
 
-    public void RefreshPlayerItems(List<Item> itemList)
+    public void RefreshPlayerItems(IInventoryAccess playerInv)
     {
-        //playerItems[i].GetComponent<IUpdateItem>().UpdateItem(item);
-        throw new System.NotImplementedException();
+        for (int i=0; i<playerInv.GetListCount(); i++)
+        {
+            Item aux = playerInv.GetItemAtIndex(i);
+            if (aux != null)
+            {
+                if (playerItems.ContainsKey(i))
+                {
+                    if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
+                    {
+                        updateInterface.UpdateItem(aux);
+                    }
+                }
+                else
+                {
+                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i);
+                }
+            }
+            else
+            {
+                if (playerItems.ContainsKey(i))
+                {
+                    Destroy(playerItems[i]);
+                    playerItems.Remove(i);
+                }
+            }
+        }
     }
 
-    public void RefreshShopkeeperItems(List<Item> itemList)
+    public void RefreshShopkeeperItems(IInventoryAccess shopkeeperInv)
     {
-        //shopkeeperItems[i].GetComponent<IUpdateItem>().UpdateItem(shopkeeperInventory.GetItemByID(shopkeeperItems[i].Key));
-        throw new System.NotImplementedException();
+        for (int i = 0; i < shopkeeperInv.GetListCount(); i++)
+        {
+            Item aux = shopkeeperInv.GetItemAtIndex(i);
+            if (aux != null)
+            {
+                if (shopkeeperItems.ContainsKey(i))
+                {
+                    if (shopkeeperItems[i].TryGetComponent(out IUpdateItem updateInterface))
+                    {
+                        updateInterface.UpdateItem(aux);
+                    }
+                }
+                else
+                {
+                    InstantiateItem(new Item(aux), shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i);
+                }
+            }
+            else
+            {
+                if (shopkeeperItems.ContainsKey(i))
+                {
+                    Destroy(shopkeeperItems[i]);
+                    shopkeeperItems.Remove(i);
+                }
+            }
+        }
     }
 
     public void SwitchVisibility(bool newVisibility)
@@ -96,27 +161,14 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         goldText.text = newValue.ToString();
     }
 
-    public void ShowPopUp(int itemIndex, bool isShopkeeper)
+    void InstantiateItem(Item itemRef, GameObject itemPrefab, Transform itemParent, ref Dictionary<int, GameObject> dictionaryRef, Action<Item> submitAction, int index)
     {
-        if (isShopkeeper)
-        {
-            Item aux = shopkeeperInventory.GetItemAtIndex(itemIndex);
-            aux.data.constructorRef.ConstructPopUp(popUpRef, aux);
-            //popUpRef.ShowInfo(aux.itemName, aux.category.ToString(), aux.description, aux.goldValue.ToString());
-        }
-        else 
-        {
-            Item aux = playerInventory.GetItemAtIndex(itemIndex);
-            if (aux.data.canSell)
-            {
-                playerPopUpConstructor.ConstructPopUp(popUpRef, aux);
-            }
-            //popUpRef.ShowInfo(aux.itemName, aux.amount, aux.goldValue.ToString());
-        }
-    }
+        GameObject instantiatedRef = Instantiate(itemPrefab, itemParent);
 
-    public void HidePopUp()
-    {
-        popUpRef.ClearPopUp();
+        if (instantiatedRef.TryGetComponent(out IInitializeUIItem initInterface))
+        {
+            initInterface.Initialize(itemRef, popUpRef, submitAction);
+        }
+        dictionaryRef.Add(index, instantiatedRef);
     }
 }

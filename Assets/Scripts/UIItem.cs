@@ -32,7 +32,7 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
 
     protected abstract void PopulateItem();
 
-    void ShowPopUp()
+    protected virtual void ShowPopUp()
     {
         item.data.constructorRef.ConstructPopUp(popUpRef, item);
     }
@@ -40,11 +40,6 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
     void HidePopUp()
     {
         popUpRef.ClearPopUp();
-    }
-
-    void Test(Item asd)
-    {
-
     }
 
     public void UpdateItem(Item newItem)

@@ -4,19 +4,15 @@ using UnityEngine;
 
 public interface IInventoryAccess
 {
+    void InitializeInventory();
+
     Item GetItemAtIndex(int index);
     Item GetItem(Item itemRef);
+    Item GetItemWithData(ItemData dataRef);
 
     List<Item> GetItemList();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="itemToAdd"></param>
-    /// <returns>
-    /// Returns -1 if failed to add item. Returns 0 if added successfully. Otherwise, returns amount over stack limit
-    /// </returns>
-    int AddItem(Item itemToAdd);
+    int GetListCount();
 
     /// <summary>
     /// 
@@ -25,19 +21,7 @@ public interface IInventoryAccess
     /// <returns>
     /// Returns -1 if failed to add item. Returns 0 if added successfully. Otherwise, returns amount over stack limit
     /// </returns>
-    int AddItemToIndex(Item itemToAdd, int index);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="itemToAdd"></param>
-    /// <returns>
-    /// Returns true if able to add item. False if there was no open slot
-    /// </returns>
-    bool AddItemToFirstEmptySlot(Item itemToAdd);
-
-    void RemoveItem(Item itemToRemove);
-    void RemoveItem(int itemIndex);
+    int TryToAddItem(Item itemToAdd);
 
     /// <summary>
     /// 
@@ -48,7 +32,7 @@ public interface IInventoryAccess
     /// Returns -1 if item not valid. Returns 0 if no amount was left. Otherwise, returns amount left
     /// </returns>
     int RemoveItemAmount(Item itemToRemove, int amountToRemove);
-
+    /*
     /// <summary>
     /// 
     /// </summary>
@@ -57,7 +41,7 @@ public interface IInventoryAccess
     /// <returns>
     /// Returns -1 if item index not valid. Returns 0 if no amount was left. Otherwise, returns amount left
     /// </returns>
-    int RemoveItemAmount(int itemIndex, int amountToRemove);
+    int RemoveItemAmount(int itemIndex, int amountToRemove);*/
 
     void SwapItems(int firstIndex, int secondIndex);
 }

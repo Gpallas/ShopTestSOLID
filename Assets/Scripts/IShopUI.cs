@@ -4,15 +4,15 @@ using UnityEngine;
 
 public interface IShopUI
 {
-    void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv/*List<Item> itemList*/);
+    void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv);
 
-    void PopulatePlayerMenu(IInventoryAccess playerInv/*List<Item> itemList*/);
+    void PopulatePlayerMenu(IInventoryAccess playerInv);
 
     void FillBaseInfo(Sprite shopkeeperSprite, string shopkeeperString, int playerGold);
 
-    void RefreshShopkeeperItems(List<Item> itemList);
+    void RefreshShopkeeperItems(IInventoryAccess shopkeeperInv);
 
-    void RefreshPlayerItems(List<Item> itemList);
+    void RefreshPlayerItems(IInventoryAccess playerInv);
 
     void UpdateGoldValue(int newValue);
 

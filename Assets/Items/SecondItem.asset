@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd3f1358c9ffe945bd960e67f319ab5, type: 3}
   m_Name: SecondItem
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
+  image: {fileID: 8740688317848579606, guid: 9f510b71574005848a89186b94d833c4, type: 3}
   itemName: SecondItem Name
-  description: 
-  goldValue: 0
-  canSell: 0
-  wasSold: 0
+  description: Some random description that is long enough to test how teh UI handles
+    long text
+  goldValue: 150
+  canSell: 1
   category: 0
   stackable: 1
   stackLimit: 999
-  constructorRef: {fileID: 0}
+  constructorRef: {fileID: 11400000, guid: 87d14a2aae5839e44889f813953857e1, type: 2}

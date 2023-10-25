@@ -19,7 +19,7 @@ public class TestInputAction : MonoBehaviour
 
     void BuyItem(Item itemToBuy)
     {
-        int result = invAccess.AddItem(itemToBuy);
+        int result = invAccess.TryToAddItem(itemToBuy);
 
         if (result < 0)
         {

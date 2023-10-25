@@ -4,7 +4,7 @@ using UnityEngine;
 public class GoldHandler : MonoBehaviour, IGoldAccess
 {
     int currentGold;
-    int maximumAmount;
+    int maximumAmount = 999999999;
 
     void Start()
     {

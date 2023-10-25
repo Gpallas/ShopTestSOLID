@@ -68,21 +68,25 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
     {
         PlayerInput input = FindAnyObjectByType<PlayerInput>();
 
-        foreach (KeyValuePair<string, Action<InputAction.CallbackContext>> action in actionsDictionary)
+        if (input)
         {
-            InputAction aux = input.actions.FindAction(action.Key);
+            foreach (KeyValuePair<string, Action<InputAction.CallbackContext>> action in actionsDictionary)
+            {
+                InputAction aux = input.actions.FindAction(action.Key);
 
-            aux.started -= actionsDictionary[action.Key];
-            aux.performed -= actionsDictionary[action.Key];
-            aux.canceled -= actionsDictionary[action.Key];
+                aux.started -= actionsDictionary[action.Key];
+                aux.performed -= actionsDictionary[action.Key];
+                aux.canceled -= actionsDictionary[action.Key];
+            }
+            /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar
+            foreach (KeyValuePair<string, InputAction> iterator in inputActionsDictionary)
+            {
+                inputActionsDictionary[iterator.Key].started -= actionsDictionary[iterator.Key];
+                inputActionsDictionary[iterator.Key].performed -= actionsDictionary[iterator.Key];
+                inputActionsDictionary[iterator.Key].canceled -= actionsDictionary[iterator.Key];
+            }*/
         }
-        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar
-        foreach (KeyValuePair<string, InputAction> iterator in inputActionsDictionary)
-        {
-            inputActionsDictionary[iterator.Key].started -= actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].performed -= actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].canceled -= actionsDictionary[iterator.Key];
-        }*/
+
     }
 
     void OnDestroy()
