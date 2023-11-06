@@ -748,9 +748,7 @@ GameObject:
   - component: {fileID: 188311773}
   - component: {fileID: 188311772}
   - component: {fileID: 188311775}
-  - component: {fileID: 188311776}
   - component: {fileID: 188311777}
-  - component: {fileID: 188311778}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -900,30 +898,6 @@ MonoBehaviour:
     amount: 37
     wasSold: 0
     id: 3
---- !u!114 &188311776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 188311771}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1629e12678b73842a4f11a02430b541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiItemPrefab: {fileID: 4260498964616263033, guid: c8c1523819d166d4399a0af55f32dd9a, type: 3}
-  canvasRef: {fileID: 163565993}
-  itemRef:
-    data: {fileID: 11400000, guid: e64f039e81d9c18438e49bb61e5d1af2, type: 2}
-    amount: 50
-    wasSold: 0
-    id: 0
-  popUpRef: {fileID: 2011926330}
-  shopRef: {fileID: 1202843440}
-  playerInventory: {fileID: 188311775}
-  shopkeeperInventory: {fileID: 0}
-  playerGold: {fileID: 188311777}
 --- !u!114 &188311777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,25 +910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11b8f08a82c0b8e44b49f553f659f0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &188311778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 188311771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3956c2b1638984da0d394ebe0f791d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shopRef: {fileID: 1202843440}
-  shopUIRef: {fileID: 323234873}
-  playerInv: {fileID: 188311775}
-  shopkeeperInv: {fileID: 1202843442}
-  playerGold: {fileID: 188311777}
-  shopkeeperImage: {fileID: 640460212297371782, guid: 9f510b71574005848a89186b94d833c4, type: 3}
-  shopkeeperMessage: Hello!! Asd asd asd asd asd
 --- !u!1 &296107298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,6 +1151,7 @@ MonoBehaviour:
   goldText: {fileID: 584672040}
   shopItemPrefab: {fileID: 4260498964616263033, guid: c8c1523819d166d4399a0af55f32dd9a, type: 3}
   playerItemPrefab: {fileID: 8162288264024892814, guid: 8ddbd5b301e59334aa805d59f6aa246f, type: 3}
+  playerItemPopUpConstructor: {fileID: 0}
 --- !u!1 &401489832
 GameObject:
   m_ObjectHideFlags: 0

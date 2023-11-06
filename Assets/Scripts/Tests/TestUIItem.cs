@@ -34,7 +34,7 @@ public class TestUIItem : MonoBehaviour
 
         if (instantiatedRef.TryGetComponent(out IInitializeUIItem initInterface))
         {
-            initInterface.Initialize(itemRef, popUpRef.GetComponent<IPopUpInfo>(), SellItem);
+            initInterface.Initialize(itemRef, popUpRef.GetComponent<IPopUpInfo>(), SellItem, itemRef.data.constructorRef.ConstructPopUpWithGold);
         }
 
         FindAnyObjectByType<PlayerInput>().SwitchCurrentActionMap("MyUI");

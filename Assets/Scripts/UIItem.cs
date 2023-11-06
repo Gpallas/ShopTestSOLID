@@ -10,10 +10,14 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
 
     IPopUpInfo popUpRef;
 
-    public void Initialize(Item itemRef, IPopUpInfo popUp, Action<Item> onSubmitAction)
+    Action<IPopUpInfo, Item> constructor;
+
+    public void Initialize(Item itemRef, IPopUpInfo popUp, Action<Item> onSubmitAction, Action<IPopUpInfo, Item> popUpConstructor)
     {
         item = itemRef;
         popUpRef = popUp;
+
+        constructor = popUpConstructor;
 
         PopulateItem();
         if (TryGetComponent(out ISelectAction selectInterface))
@@ -34,7 +38,8 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
 
     protected virtual void ShowPopUp()
     {
-        item.data.constructorRef.ConstructPopUp(popUpRef, item);
+        //item.data.constructorRef.ConstructPopUp(popUpRef, item);
+        constructor?.Invoke(popUpRef, item);
     }
 
     void HidePopUp()

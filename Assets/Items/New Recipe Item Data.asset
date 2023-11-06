@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbe32caa89a50b4699a39e3a5732145, type: 3}
+  m_Name: New Recipe Item Data
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  itemName: 
+  description: 
+  goldValue: 0
+  canSell: 0
+  category: 0
+  stackable: 1
+  stackLimit: 0
+  constructorRef: {fileID: 11400000, guid: b4889644ec9e8e24fafd810be4a15510, type: 2}
+  allIngredients:
+  - typePurpose: SecondItem
+    value: 15
+    icon: {fileID: 8740688317848579606, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  - typePurpose: Third Item
+    value: 4
+    icon: {fileID: 6187108816858757141, guid: 9f510b71574005848a89186b94d833c4, type: 3}

@@ -33,6 +33,9 @@ public class ShopUIManager : MonoBehaviour, IShopUI
     [SerializeField]
     GameObject playerItemPrefab;
 
+    [SerializeField]
+    BasePopUpConstructor playerItemPopUpConstructor;
+
     Dictionary<int, GameObject> shopkeeperItems;
     Dictionary<int, GameObject> playerItems;
 
@@ -51,7 +54,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
             Item aux = shopkeeperInv.GetItemAtIndex(i);
             if (aux != null)
             {
-                InstantiateItem(aux, shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i);
+                Action<IPopUpInfo, Item> actionAux = aux.data.constructorRef.ConstructPopUpWithGold;
+                InstantiateItem(aux, shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i, actionAux);
             }
         }
     }
@@ -65,7 +69,14 @@ public class ShopUIManager : MonoBehaviour, IShopUI
             Item aux = playerInv.GetItemAtIndex(i);
             if (aux != null)
             {
-                InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i);
+                if (aux.data.canSell)
+                {
+                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
+                }
+                else
+                {
+                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
+                }
             }
         }
     }
@@ -107,7 +118,14 @@ public class ShopUIManager : MonoBehaviour, IShopUI
                 }
                 else
                 {
-                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i);
+                    if (aux.data.canSell)
+                    {
+                        InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
+                    }
+                    else
+                    {
+                        InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
+                    }
                 }
             }
             else
@@ -137,7 +155,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
                 }
                 else
                 {
-                    InstantiateItem(new Item(aux), shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i);
+                    Action<IPopUpInfo, Item> actionAux = aux.data.constructorRef.ConstructPopUpWithGold;
+                    InstantiateItem(new Item(aux), shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i, actionAux);
                 }
             }
             else
@@ -161,13 +180,14 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         goldText.text = newValue.ToString();
     }
 
-    void InstantiateItem(Item itemRef, GameObject itemPrefab, Transform itemParent, ref Dictionary<int, GameObject> dictionaryRef, Action<Item> submitAction, int index)
+    void InstantiateItem(Item itemRef, GameObject itemPrefab, Transform itemParent, ref Dictionary<int, GameObject> dictionaryRef, 
+                            Action<Item> submitAction, int index, Action<IPopUpInfo, Item> popUpConstructor)
     {
         GameObject instantiatedRef = Instantiate(itemPrefab, itemParent);
 
         if (instantiatedRef.TryGetComponent(out IInitializeUIItem initInterface))
         {
-            initInterface.Initialize(itemRef, popUpRef, submitAction);
+            initInterface.Initialize(itemRef, popUpRef, submitAction, popUpConstructor);
         }
         dictionaryRef.Add(index, instantiatedRef);
     }

@@ -5,7 +5,10 @@ public class ItemData : ScriptableObject
 {
     public enum ItemCategory
     {
-        None
+        None,
+        Seed,
+        Furniture,
+        Food
     }
 
     public Sprite image;
@@ -20,6 +23,10 @@ public class ItemData : ScriptableObject
     public int stackLimit;
 
     public BasePopUpConstructor constructorRef;
+
+    public virtual string[] GetExtraData() { return null; }
+
+    public virtual object[] GetExtraDataForUI() { return null; }
 
     public override bool Equals(object other)
     {

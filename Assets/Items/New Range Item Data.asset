@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45c34533dac20394fbd17d0484c781b9, type: 3}
+  m_Name: New Range Item Data
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  itemName: ASDF
+  description: RGDFGERGO  qeiwfjpigj effg  ohs gisugh igh fsg
+  goldValue: 450
+  canSell: 1
+  category: 2
+  stackable: 1
+  stackLimit: 50
+  constructorRef: {fileID: 11400000, guid: af4fd337524c70a4a9424fdfb64a9d85, type: 2}
+  allRanges:
+  - typePurpose: damage
+    range: {x: 3, y: 7}
+    icon: {fileID: -4520347070994711835, guid: 9f510b71574005848a89186b94d833c4, type: 3}
