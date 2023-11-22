@@ -5,14 +5,14 @@ public class Item
 {
     public ItemData data;
     public int amount;
-    public bool wasSold;
+    public bool isPlayerItem;
     public int id = -1;
     
     public Item()
     {
         data = null;
         amount = -1;
-        wasSold = false;
+        isPlayerItem = false;
         id = -1;
     }
 
@@ -20,15 +20,23 @@ public class Item
     {
         data = dataRef;
         amount = 1;
-        wasSold = false;
+        isPlayerItem = false;
         id = -1;
     }
 
-    public Item(ItemData dataRef, int amountRef, bool sold, int idRef)
+    public Item(ItemData dataRef, bool isPlayer)
+    {
+        data = dataRef;
+        amount = 1;
+        isPlayerItem = isPlayer;
+        id = -1;
+    }
+
+    public Item(ItemData dataRef, int amountRef, bool isPlayer, int idRef)
     {
         data = dataRef;
         amount = amountRef;
-        wasSold = sold;
+        isPlayerItem = isPlayer;
         id = idRef;
     }
 
@@ -36,7 +44,7 @@ public class Item
     {
         data = itemRef.data;
         amount = itemRef.amount;
-        wasSold = itemRef.wasSold;
+        isPlayerItem = itemRef.isPlayerItem;
         id = itemRef.id;
     }
 
@@ -44,7 +52,7 @@ public class Item
     {
         data = itemRef.data;
         amount = itemRef.amount;
-        wasSold = itemRef.wasSold;
+        isPlayerItem = itemRef.isPlayerItem;
         id = idRef;
     }
 

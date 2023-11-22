@@ -60,7 +60,7 @@ public class TestUIItem : MonoBehaviour
         /*aux*/
         itemToSell.amount = quantitySold;
         /*aux*/
-        itemToSell.wasSold = true;
+        itemToSell.isPlayerItem = true;
         shopkeeperInventory.TryToAddItem(/*aux*/itemToSell);
 
         if (result > 0 )

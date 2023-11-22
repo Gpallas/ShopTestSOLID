@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Some quick description
   goldValue: 34
   canSell: 1
-  category: 0
+  category: {fileID: 11400000, guid: 7d2bc4acbf8c30c48ab4a2519b3d6ee6, type: 2}
   stackable: 1
   stackLimit: 50
   constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}

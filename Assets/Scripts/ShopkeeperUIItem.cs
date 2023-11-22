@@ -21,7 +21,7 @@ public class ShopkeeperUIItem : UIItem
         image.sprite = item.data.image;
         itemName.text = item.data.itemName;
         itemCost.text = item.data.goldValue.ToString();
-        if (item.wasSold)
+        if (item.isPlayerItem)
         {
             resellIcon.SetActive(true);
             itemAmount.text = item.amount.ToString();

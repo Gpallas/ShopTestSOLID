@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Pop Up Constructor/Item With Effect")]
+[CreateAssetMenu(menuName = "ScriptableObject/PopUpConstructor/Item With Effect")]
 public class EffectItemPopUpConstructor : RegularPopUpConstructor
 {
     protected override void BuildPopUp(IPopUpInfo popUpRef, Item itemRef)

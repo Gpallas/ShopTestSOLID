@@ -18,7 +18,7 @@ MonoBehaviour:
     long text
   goldValue: 150
   canSell: 1
-  category: 0
+  category: {fileID: 11400000, guid: 93ba957d130296e468d116562136278f, type: 2}
   stackable: 1
   stackLimit: 999
-  constructorRef: {fileID: 11400000, guid: 87d14a2aae5839e44889f813953857e1, type: 2}
+  constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}

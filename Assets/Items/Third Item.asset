@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Shoes to walk around
   goldValue: 50
   canSell: 1
-  category: 0
+  category: {fileID: 11400000, guid: eb3e1ac69c40c1c43a120267bed0149e, type: 2}
   stackable: 1
   stackLimit: 4
-  constructorRef: {fileID: 11400000, guid: 87d14a2aae5839e44889f813953857e1, type: 2}
+  constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}

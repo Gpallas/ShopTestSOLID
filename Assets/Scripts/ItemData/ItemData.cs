@@ -1,15 +1,16 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObject/Item")]
+[CreateAssetMenu(menuName = "ScriptableObject/ItemData/Regular Item")]
 public class ItemData : ScriptableObject
 {
-    public enum ItemCategory
+    /*public enum ItemCategory
     {
         None,
         Seed,
         Furniture,
         Food
-    }
+    }*/
 
     public Sprite image;
     public string itemName;

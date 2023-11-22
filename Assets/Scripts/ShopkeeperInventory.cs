@@ -22,7 +22,7 @@ public class ShopkeeperInventory : MonoBehaviour, IInventoryAccess
     /// </returns>
     public int TryToAddItem(Item itemToAdd)
     {
-        int itemIndex = IndexOfFirstResell(itemToAdd.data);
+        int itemIndex = IndexOfFirstResellSlotAvailable(itemToAdd.data);
         if (IsListIndexValid(itemIndex))
         {
             int leftovers = itemList[itemIndex].AddAmount(itemToAdd.amount);
@@ -191,7 +191,7 @@ public class ShopkeeperInventory : MonoBehaviour, IInventoryAccess
         return -1;
     }
 
-    int IndexOfFirstResell(ItemData dataRef)
+    int IndexOfFirstResellSlotAvailable(ItemData dataRef)
     {
         for (int i = 0; i < itemList.Count; i++)
         {
@@ -199,7 +199,10 @@ public class ShopkeeperInventory : MonoBehaviour, IInventoryAccess
             {
                 if (dataRef == itemList[i].data && itemList[i].id != -1)
                 {
-                    return i;
+                    if (itemList[i].amount < itemList[i].data.stackLimit)
+                    {
+                        return i;
+                    }
                 }
             }
         }

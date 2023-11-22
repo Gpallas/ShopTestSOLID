@@ -49,7 +49,7 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
     public void BuyItem(Item itemToBuy)
     {
-        bool wasSold = itemToBuy.wasSold;
+        bool wasSold = itemToBuy.isPlayerItem;
         int itemValue = (wasSold) ? itemToBuy.data.goldValue / 2 : itemToBuy.data.goldValue;
 
         //Check if player has gold to buy one item
@@ -69,7 +69,6 @@ public class ShopManager : MonoBehaviour, ITradeItem
             }
 
             itemToBuy.amount = quantity;
-
 
             //Try to add item to inventory
             int result = playerInventory.TryToAddItem(itemToBuy);
@@ -121,7 +120,7 @@ public class ShopManager : MonoBehaviour, ITradeItem
         playerGold.AddGold(itemToSell.data.goldValue / 2 * quantitySold);
 
         itemToSell.amount = quantitySold;
-        itemToSell.wasSold = true;
+        itemToSell.isPlayerItem = true;
         
         shopkeeperInventory.TryToAddItem(itemToSell);
 

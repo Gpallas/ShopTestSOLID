@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Pop Up Constructor/Recipe")]
+[CreateAssetMenu(menuName = "ScriptableObject/PopUpConstructor/Recipe")]
 public class RecipeItemPopUpConstructor : BasePopUpConstructor
 {
     protected override void BuildPopUp(IPopUpInfo popUpRef, Item itemRef)
@@ -13,13 +13,11 @@ public class RecipeItemPopUpConstructor : BasePopUpConstructor
 
         popUpRef.AddText("Ingredients");
 
-        popUpRef.ChangeIndentationLevel(/*amountToChange = */1);
         foreach (IngredientInfo i in itemRef.data.GetExtraDataForUI())
         {
             popUpRef.AddImageWithNumberAndText(i.icon, i.amount, i.ingredientName);
         }
-        popUpRef.ChangeIndentationLevel(/*amountToChange = */-1);
 
-        popUpRef.AddText(itemRef.data.description);
+        popUpRef.AddText(itemRef.data.description, /*shouldResize = */false);
     }
 }

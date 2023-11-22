@@ -17,8 +17,8 @@ MonoBehaviour:
   description: 
   goldValue: 0
   canSell: 0
-  category: 0
+  category: {fileID: 11400000, guid: eb3e1ac69c40c1c43a120267bed0149e, type: 2}
   stackable: 1
   stackLimit: 0
   constructorRef: {fileID: 0}
-  asd: []
+  allEffects: []

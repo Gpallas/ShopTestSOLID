@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 0}
   itemName: ASDF
-  description: RGDFGERGO  qeiwfjpigj effg  ohs gisugh igh fsg
+  description: RGDFGERGO  qeiwfjpigj effg  ohs gisugh igh fsg piurewyrtg yrou dyfuyad
+    fuya dfouyadg fuoady gfouasdygf oasd ygf
   goldValue: 450
   canSell: 1
-  category: 2
+  category: {fileID: 11400000, guid: 93ba957d130296e468d116562136278f, type: 2}
   stackable: 1
   stackLimit: 50
   constructorRef: {fileID: 11400000, guid: af4fd337524c70a4a9424fdfb64a9d85, type: 2}

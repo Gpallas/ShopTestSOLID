@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: New Recipe Item Data
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  itemName: 
-  description: 
-  goldValue: 0
+  itemName: Test Recipe
+  description: A recipe to test how the ingredients are shown
+  goldValue: 500
   canSell: 0
-  category: 0
+  category: {fileID: 11400000, guid: 7d2bc4acbf8c30c48ab4a2519b3d6ee6, type: 2}
   stackable: 1
   stackLimit: 0
   constructorRef: {fileID: 11400000, guid: b4889644ec9e8e24fafd810be4a15510, type: 2}

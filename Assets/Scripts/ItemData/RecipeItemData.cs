@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObject/Recipe Item")]
+[CreateAssetMenu(menuName = "ScriptableObject/ItemData/Recipe Item")]
 public class RecipeItemData : ItemData
 {
     public ValueType[] allIngredients;

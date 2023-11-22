@@ -2,22 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObject/Range Item")]
+[CreateAssetMenu(menuName = "ScriptableObject/ItemData/Item With Range")]
 public class RangeItemData : ItemData
 {
-    public Dictionary<string, RangeInt> extraData;
-
     public RangeType[] allRanges;
 
     public override string[] GetExtraData()
     {
-        string[] data = new string[extraData.Count];
-        int i = 0;
-        foreach (KeyValuePair<string, RangeInt> pair in extraData)
-        {
-            data[i] = pair.Key + ":" + pair.Value.ToString();
-            i++;
-        }
         return base.GetExtraData();
     }
 

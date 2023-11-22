@@ -11,6 +11,7 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
     IPopUpInfo popUpRef;
 
     Action<IPopUpInfo, Item> constructor;
+    bool isPopUpShowing = false;
 
     public void Initialize(Item itemRef, IPopUpInfo popUp, Action<Item> onSubmitAction, Action<IPopUpInfo, Item> popUpConstructor)
     {
@@ -38,12 +39,13 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
 
     protected virtual void ShowPopUp()
     {
-        //item.data.constructorRef.ConstructPopUp(popUpRef, item);
+        isPopUpShowing = true;
         constructor?.Invoke(popUpRef, item);
     }
 
     void HidePopUp()
     {
+        isPopUpShowing = false;
         popUpRef.ClearPopUp();
     }
 
@@ -61,6 +63,12 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
             {
                 update.UpdateItem(newItem);
             }
+        }
+
+        if (isPopUpShowing)
+        {
+            HidePopUp();
+            ShowPopUp();
         }
     }
 }
