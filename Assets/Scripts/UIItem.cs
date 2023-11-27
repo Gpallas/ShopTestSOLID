@@ -39,14 +39,20 @@ public abstract class UIItem : MonoBehaviour, IInitializeUIItem, IUpdateItem
 
     protected virtual void ShowPopUp()
     {
-        isPopUpShowing = true;
-        constructor?.Invoke(popUpRef, item);
+        if (item != null)
+        {
+            isPopUpShowing = true;
+            constructor?.Invoke(popUpRef, item);
+        }
     }
 
     void HidePopUp()
     {
-        isPopUpShowing = false;
-        popUpRef.ClearPopUp();
+        if (isPopUpShowing)
+        {
+            isPopUpShowing = false;
+            popUpRef.ClearPopUp();
+        }
     }
 
     public void UpdateItem(Item newItem)

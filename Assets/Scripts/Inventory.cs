@@ -9,7 +9,7 @@ using UnityEngine.Rendering.UI;
 public class Inventory : MonoBehaviour, IInventoryAccess
 {
     List<Item> itemList;
-    int listSize = 16;
+    int listSize = 36;
 
     public Item[] testItems;
 
@@ -37,7 +37,14 @@ public class Inventory : MonoBehaviour, IInventoryAccess
 
         for (int i = 0; i < items.Length; i++)
         {
-            itemList[i] = items[i];
+            if (items[i].data == null)
+            {
+                itemList[i] = null;
+            }
+            else
+            {
+                itemList[i] = items[i];
+            }
         }
     }
 

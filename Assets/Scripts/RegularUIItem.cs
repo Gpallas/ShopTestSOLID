@@ -12,14 +12,24 @@ public class RegularUIItem : UIItem
 
     protected override void PopulateItem()
     {
-        image.sprite = item.data.image;
-        if (item.amount > 1)
+        if (item != null)
         {
-            amount.text = item.amount.ToString();
-            amount.gameObject.SetActive(true);
+            image.sprite = item.data.image;
+            image.gameObject.SetActive(true);
+
+            if (item.amount > 1)
+            {
+                amount.text = item.amount.ToString();
+                amount.gameObject.SetActive(true);
+            }
+            else
+            {
+                amount.gameObject.SetActive(false);
+            }
         }
         else
         {
+            image.gameObject.SetActive(false);
             amount.gameObject.SetActive(false);
         }
     }

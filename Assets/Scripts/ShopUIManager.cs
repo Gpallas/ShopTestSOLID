@@ -19,6 +19,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
     [SerializeField]
     Transform shopItemParent;
     [SerializeField]
+    Scrollbar shopItemScrollbar;
+    [SerializeField]
     Transform playerItemParent;
 
     [SerializeField]
@@ -58,6 +60,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
                 InstantiateItem(aux, shopItemPrefab, shopItemParent, ref shopkeeperItems, shopManagerRef.BuyItem, i, actionAux);
             }
         }
+
+        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - 4;
     }
 
     public void PopulatePlayerMenu(IInventoryAccess playerInv)
@@ -67,17 +71,18 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         for (int i = 0; i < playerInv.GetListCount(); i++)
         {
             Item aux = playerInv.GetItemAtIndex(i);
-            if (aux != null)
+            /*if (aux != null)
             {
                 if (aux.data.canSell)
                 {
                     InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
+                    continue;
                 }
-                else
-                {
-                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
-                }
-            }
+            }*/
+
+            //InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
+
+            InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
         }
     }
 
@@ -107,34 +112,39 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         for (int i=0; i<playerInv.GetListCount(); i++)
         {
             Item aux = playerInv.GetItemAtIndex(i);
-            if (aux != null)
+            //if (aux != null)
+            //{
+            //    if (playerItems.ContainsKey(i))
+            //    {
+            //        if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
+            //        {
+            //            updateInterface.UpdateItem(aux);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (aux.data.canSell)
+            //        {
+            //            InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
+            //        }
+            //        else
+            //        {
+            //            InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    if (playerItems.ContainsKey(i))
+            //    {
+            //        Destroy(playerItems[i]);
+            //        playerItems.Remove(i);
+            //    }
+            //}
+
+            if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
             {
-                if (playerItems.ContainsKey(i))
-                {
-                    if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
-                    {
-                        updateInterface.UpdateItem(aux);
-                    }
-                }
-                else
-                {
-                    if (aux.data.canSell)
-                    {
-                        InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
-                    }
-                    else
-                    {
-                        InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
-                    }
-                }
-            }
-            else
-            {
-                if (playerItems.ContainsKey(i))
-                {
-                    Destroy(playerItems[i]);
-                    playerItems.Remove(i);
-                }
+                updateInterface.UpdateItem(aux);
             }
         }
     }
@@ -168,6 +178,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
                 }
             }
         }
+
+        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - 3;
     }
 
     public void SwitchVisibility(bool newVisibility)

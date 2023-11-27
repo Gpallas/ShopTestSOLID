@@ -45,7 +45,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddTitle(string titleText, bool shouldResize = true)
     {
-        GameObject aux = Instantiate(textPrefab);
+        GameObject aux = Instantiate(textPrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         TextMeshProUGUI textComp = aux.GetComponentInChildren<TextMeshProUGUI>();
         textComp.text = titleText;
@@ -65,7 +65,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddText(string text, bool shouldResize = true)
     {
-        GameObject aux = Instantiate(textPrefab);
+        GameObject aux = Instantiate(textPrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         TextMeshProUGUI textComp = aux.GetComponentInChildren<TextMeshProUGUI>();
         textComp.text = text;
@@ -85,7 +85,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddGoldAmount(int goldAmount, bool shouldResize = true)
     {
-        GameObject aux = Instantiate(textAndImagePrefab);
+        GameObject aux = Instantiate(textAndImagePrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         aux.GetComponentInChildren<Image>().sprite = goldIcon;
         TextMeshProUGUI textComp = aux.GetComponentInChildren<TextMeshProUGUI>();
@@ -106,7 +106,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddDivisory(bool shouldResize = false)
     {
-        GameObject aux = Instantiate(divisoryPrefab);
+        GameObject aux = Instantiate(divisoryPrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         if (shouldResize)
         {
@@ -122,7 +122,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddTextAndImage(string text, Sprite sprite, bool shouldResize = true)
     {
-        GameObject aux = Instantiate(textAndImagePrefab);
+        GameObject aux = Instantiate(textAndImagePrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         aux.GetComponentInChildren<Image>().sprite = sprite;
         TextMeshProUGUI textComp = aux.GetComponentInChildren<TextMeshProUGUI>();
@@ -149,7 +149,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
     {
         if (category != null)
         {
-            GameObject aux = Instantiate(textPrefab);
+            GameObject aux = Instantiate(textPrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
             TextMeshProUGUI textComp = aux.GetComponentInChildren<TextMeshProUGUI>();
             textComp.text = category.categoryName;
@@ -171,7 +171,7 @@ public class PopUp : MonoBehaviour, IPopUpInfo
 
     public void AddImageWithNumberAndText(Sprite sprite, int amount, string text, bool shouldResize = true)
     {
-        GameObject aux = Instantiate(imageNumberTextPrefab);
+        GameObject aux = Instantiate(imageNumberTextPrefab, new Vector3(-10000f, -10000f, 0), Quaternion.identity, transform.parent);
 
         foreach (Transform t in aux.transform)
         {

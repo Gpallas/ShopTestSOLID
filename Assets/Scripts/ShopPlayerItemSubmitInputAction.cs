@@ -38,12 +38,12 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     int MultipleItemAmount()
     {
-        return  Mathf.CeilToInt((float)item.amount / 2f);
+        return  (item != null) ? Mathf.CeilToInt((float)item.amount / 2f) : -1;
     }
 
     int AllItemAmount()
     {
-        return item.data.stackLimit;
+        return (item != null) ? item.data.stackLimit : -1;
     }
 
     protected override void HandleInputActionAlreadyActive(InputActionPhase currentPhase, string inputActionName)
@@ -121,21 +121,30 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     void SubmitStart(int amount)
     {
-        item.amount = amount;
-        onSubmitAction?.Invoke(item);
+        if (item != null)
+        {
+            item.amount = amount;
+            onSubmitAction?.Invoke(item);
+        }
     }
 
     void SubmitPerformed(Func<int> GetAmount, string inputName)
     {
-        allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+        if (item != null)
+        {
+            allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+        }
     }
 
     void SubmitCancelled(string inputName)
     {
-        if (allCoroutines[inputName] != null)
+        if (item != null)
         {
-            StopCoroutine(allCoroutines[inputName]);
-            allCoroutines.Remove(inputName);
+            if (allCoroutines[inputName] != null)
+            {
+                StopCoroutine(allCoroutines[inputName]);
+                allCoroutines.Remove(inputName);
+            }
         }
     }
 
