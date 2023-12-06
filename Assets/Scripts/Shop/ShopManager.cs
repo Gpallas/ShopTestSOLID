@@ -13,6 +13,8 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
     IGoldAccess playerGold;
 
+    MyPlayerInput inputComponent;
+
     void Start()
     {
         // Find Shopkeepers and register OpenMenu in their delegates
@@ -23,6 +25,8 @@ public class ShopManager : MonoBehaviour, ITradeItem
         }
 
         shopUIGO.TryGetComponent(out shopUIRef);
+
+        inputComponent = FindAnyObjectByType<MyPlayerInput>();
     }
 
     void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage)
@@ -36,7 +40,7 @@ public class ShopManager : MonoBehaviour, ITradeItem
         shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory);
         shopUIRef.PopulatePlayerMenu(playerInventory);
 
-        FindAnyObjectByType<PlayerInput>().SwitchCurrentActionMap("MyUI");
+        inputComponent.SwitchActionMap(MyPlayerInput.myUIMapName);
     }
 
     public void CloseMenu()
@@ -45,6 +49,8 @@ public class ShopManager : MonoBehaviour, ITradeItem
         shopUIRef.SwitchVisibility(/*newVisibility = */false);
 
         shopkeeperInventory.InitializeInventory();
+
+        inputComponent.SwitchActionMap(MyPlayerInput.defaultMapName);
     }
 
     public void BuyItem(Item itemToBuy)

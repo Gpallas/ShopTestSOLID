@@ -1121,6 +1121,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "ASD",
+            "id": "d8caf5bf-5ec1-41c0-9861-ebabd49ade7f",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "42a287c7-d117-4c56-8075-6c107418705e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "84b7bd52-553a-4959-a38c-6b70fb8227b6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
