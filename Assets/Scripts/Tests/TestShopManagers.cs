@@ -14,7 +14,9 @@ public class TestShopManagers : ShopMenuCaller
     public Sprite shopkeeperImage;
     public string shopkeeperMessage;
 
-    public override void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string> openMenuMethod)
+    public PlayerStateManager playerState;
+
+    public override void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string, IStateAccess> openMenuMethod)
     {
         menuCaller = openMenuMethod;
     }
@@ -28,7 +30,7 @@ public class TestShopManagers : ShopMenuCaller
     {
         yield return new WaitForSeconds(1f);
 
-        menuCaller?.Invoke(playerInv, shopkeeperInv, playerGold, shopkeeperImage, shopkeeperMessage);
+        menuCaller?.Invoke(playerInv, shopkeeperInv, playerGold, shopkeeperImage, shopkeeperMessage, playerState);
         
         yield return new WaitForSeconds(10f);
 
@@ -36,6 +38,6 @@ public class TestShopManagers : ShopMenuCaller
 
         yield return new WaitForSeconds(1f);
 
-        menuCaller?.Invoke(playerInv, shopkeeperInv, playerGold, shopkeeperImage, shopkeeperMessage);
+        menuCaller?.Invoke(playerInv, shopkeeperInv, playerGold, shopkeeperImage, shopkeeperMessage, playerState);
     }
 }

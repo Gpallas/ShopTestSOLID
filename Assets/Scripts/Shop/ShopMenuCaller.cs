@@ -4,6 +4,6 @@ using UnityEngine;
 
 public abstract class ShopMenuCaller : MonoBehaviour
 {
-    protected Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string> menuCaller;
-    abstract public void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string> openMenuMethod);
+    protected Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string, IStateAccess> menuCaller;
+    abstract public void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string, IStateAccess> openMenuMethod);
 }

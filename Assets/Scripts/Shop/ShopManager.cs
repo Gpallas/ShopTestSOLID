@@ -13,7 +13,8 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
     IGoldAccess playerGold;
 
-    MyPlayerInput inputComponent;
+    //MyPlayerInput inputComponent;
+    IStateAccess playerState;
 
     void Start()
     {
@@ -25,11 +26,12 @@ public class ShopManager : MonoBehaviour, ITradeItem
         }
 
         shopUIGO.TryGetComponent(out shopUIRef);
-
+        /*
         inputComponent = FindAnyObjectByType<MyPlayerInput>();
+        playerState = FindAnyObjectByType<PlayerStateManager>();*/
     }
 
-    void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage)
+    void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage, IStateAccess stateInterface)
     {
         playerInventory = playerInvInterface;
         shopkeeperInventory = shopkeeperInvInterface;
@@ -40,7 +42,10 @@ public class ShopManager : MonoBehaviour, ITradeItem
         shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory);
         shopUIRef.PopulatePlayerMenu(playerInventory);
 
-        inputComponent.SwitchActionMap(MyPlayerInput.myUIMapName);
+        //inputComponent.SwitchActionMap(MyPlayerInput.myUIMapName);
+        /////////////Pensar como pegar a referencia do playerState ou se deixa o PlayerStateManager um singleton
+        playerState = stateInterface;
+        playerState.ChangeState(EPlayerState.OnShop);
     }
 
     public void CloseMenu()
@@ -50,7 +55,8 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
         shopkeeperInventory.InitializeInventory();
 
-        inputComponent.SwitchActionMap(MyPlayerInput.defaultMapName);
+        //inputComponent.SwitchActionMap(MyPlayerInput.defaultMapName);
+        playerState.ChangeState(EPlayerState.Default);
     }
 
     public void BuyItem(Item itemToBuy)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IStateAccess
 {
-    void ChangeState(EState newState);
+    void ChangeState(EPlayerState newState);
 
-    EState GetCurrentState();
+    EPlayerState GetCurrentState();
 }
