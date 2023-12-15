@@ -4,11 +4,17 @@ using UnityEngine.Windows;
 
 public class Movement : MonoBehaviour, IMovementInfo
 {
+    [SerializeField]
+    Animator characterAnimator;
     Rigidbody2D rb;
 
     bool canMove = true;
-    float speed = 5f;
-    Vector2 currentInput;
+    bool isMoving;
+
+    [SerializeField]
+    float speed;
+
+    Vector2 movementValue;
     Vector2 lastDirection;
 
     void Start()
@@ -21,9 +27,9 @@ public class Movement : MonoBehaviour, IMovementInfo
         MoveCharacter();
     }
 
-    public void UpdateMovementInput(Vector2 movementInput)
+    public void UpdateMovementValue(Vector2 updatedValue)
     {
-        currentInput = movementInput;
+        movementValue = updatedValue;
     }
 
     public void SetCanMove(bool newValue)
@@ -31,16 +37,31 @@ public class Movement : MonoBehaviour, IMovementInfo
         canMove = newValue;
     }
 
+    public Vector2 GetLastMovementDirection()
+    {
+        return lastDirection;
+    }
+
     void MoveCharacter()
     {
+        isMoving = false;
         if (canMove)
         {
-            rb.MovePosition(rb.position + (currentInput * speed * Time.fixedDeltaTime));
 
-            if (currentInput.sqrMagnitude > 0)
+            if (movementValue.sqrMagnitude > 0)
             {
-                lastDirection = currentInput.normalized;
+                rb.MovePosition(rb.position + (movementValue * speed * Time.fixedDeltaTime));
+
+                isMoving = true;
+                lastDirection = movementValue.normalized;
+
+                characterAnimator.SetFloat("MovementX", movementValue.x);
+                characterAnimator.SetFloat("MovementY", movementValue.y);
             }
         }
+
+        characterAnimator.SetBool("IsMoving", isMoving);
     }
+
+
 }

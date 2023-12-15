@@ -11,10 +11,9 @@ public class InteractingPlayerState : StateMachineBehaviour
         animator.gameObject.TryGetComponent(out info);
         info.SetCanMove(false);
 
-        /*
-        IInteract interact;
+        IInteractor interact;
         animator.gameObject.TryGetComponent(out interact);
-        interact.SetCanInteract(false);*/
+        interact.SetCanInteract(false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

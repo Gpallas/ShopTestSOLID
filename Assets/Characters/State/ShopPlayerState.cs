@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultPlayerState : StateMachineBehaviour
+public class ShopPlayerState : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         IMovementInfo info;
         animator.gameObject.TryGetComponent(out info);
-        info.SetCanMove(true);
+        info.SetCanMove(false);
 
         MyPlayerInput myInput;
         animator.gameObject.TryGetComponent(out myInput);
-        myInput.SwitchActionMap(MyPlayerInput.defaultMapName);
-        /*
-        IInteract interact;
+        myInput.SwitchActionMap(MyPlayerInput.myUIMapName);
+        
+        IInteractor interact;
         animator.gameObject.TryGetComponent(out interact);
-        interact.SetCanInteract(true);*/
+        interact.SetCanInteract(false);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
