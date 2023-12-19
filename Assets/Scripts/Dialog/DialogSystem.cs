@@ -11,7 +11,7 @@ public class DialogSystem : MonoBehaviour
     public event Action onDialogEnd;
 
     [SerializeField]
-    GameObject dialogPanel;
+    GameObject dialogContainer;
     [SerializeField]
     TextMeshProUGUI textComponent;
 
@@ -19,7 +19,7 @@ public class DialogSystem : MonoBehaviour
     int index = 0;
     bool finishedLine;
 
-    public float delayBetweenLetters;
+    public float delayBetweenLetters = 0.05f;
 
     void Awake()
     {
@@ -35,7 +35,7 @@ public class DialogSystem : MonoBehaviour
 
     public void StartDialog(string[] dialog)
     {
-        if (!dialogPanel.activeInHierarchy)
+        if (!dialogContainer.activeInHierarchy)
         {
             if (dialog.Length > 0)
             {
@@ -43,7 +43,7 @@ public class DialogSystem : MonoBehaviour
                 index = 0;
 
                 dialogText = dialog;
-                dialogPanel.SetActive(true);
+                dialogContainer.SetActive(true);
 
                 onDialogStart?.Invoke();
 
@@ -56,7 +56,7 @@ public class DialogSystem : MonoBehaviour
     {
         textComponent.text = "";
         index = 0;
-        dialogPanel.SetActive(false);
+        dialogContainer.SetActive(false);
         finishedLine = false;
 
         onDialogEnd?.Invoke();
@@ -64,7 +64,7 @@ public class DialogSystem : MonoBehaviour
 
     public void SkipPressed()
     {
-        if (dialogPanel.activeInHierarchy)
+        if (dialogContainer.activeInHierarchy)
         {
             if (finishedLine)
             {
