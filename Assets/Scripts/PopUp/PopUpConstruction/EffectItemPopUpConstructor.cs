@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObject/PopUpConstructor/Item With Effect")]
 public class EffectItemPopUpConstructor : RegularPopUpConstructor

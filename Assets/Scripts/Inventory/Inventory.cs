@@ -1,19 +1,14 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
-
-//TODO: Mudar Os Item pra ItemClass e talvez fazer com que os Gets devolvam uma cópia, não uma referência
 
 public class Inventory : MonoBehaviour, IInventoryAccess
 {
     List<Item> itemList;
     int listSize = 36;
 
+    //Is here until there's a proper save/load
     public Item[] testItems;
 
-    // Start is called before the first frame update
     void Start()
     {
         //This should be called on a load from somewhere
@@ -48,6 +43,8 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         }
     }
 
+    //Since I had to be able to change some values in an item ref but at the same time had to not have that reflect in the inventory or items themselves,
+    //returning new instances was the best workaround I could find
     public Item GetItemAtIndex(int index)
     {
         if (IsListIndexValid(index))
@@ -74,7 +71,7 @@ public class Inventory : MonoBehaviour, IInventoryAccess
         int aux = IndexOfFirst(dataRef);
         if (IsListIndexValid(aux))
         {
-            return itemList[aux];
+            return new Item(itemList[aux]);
         }
         return null;
     }
@@ -141,30 +138,6 @@ public class Inventory : MonoBehaviour, IInventoryAccess
     /// </summary>
     /// <param name="itemToAdd"></param>
     /// <returns>
-    /// Returns -1 if failed to add item. Returns 0 if added successfully. Otherwise, returns amount over stack limit
-    /// </returns>
-    int AddItemToIndex(Item itemToAdd, int index)
-    {
-        if (IsListIndexValid(index))
-        {
-            if (itemList[index] == null)
-            {
-                itemList[index] = new Item(itemToAdd);
-                return 0;
-            }
-            else if (itemList[index].data.Equals(itemToAdd.data) && itemToAdd.data.stackable)
-            {
-                return itemList[index].AddAmount(itemToAdd.amount);
-            }
-        }
-        return -1;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="itemToAdd"></param>
-    /// <returns>
     /// Returns true if able to add item. False if there was no open slot
     /// </returns>
     int AddItemToFirstEmptySlot(Item itemToAdd)
@@ -191,18 +164,6 @@ public class Inventory : MonoBehaviour, IInventoryAccess
             }
         }
         return leftovers;
-    }
-
-    void RemoveItem(Item itemToRemove)
-    {
-        int itemIndex = itemList.IndexOf(itemToRemove);
-        if (IsListIndexValid(itemIndex))
-        {
-            if (!itemList[itemIndex].RemoveAmount(itemToRemove.amount))
-            {
-                RemoveItem(itemIndex);
-            }
-        }
     }
 
     void RemoveItem(int itemIndex)

@@ -54,7 +54,7 @@ public class TestUIItem : MonoBehaviour
         //Success. Play "success" sound effect
 
         int quantitySold = (result == 0) ? /*aux.amount*/priorQuantity : /*quantity*/itemToSell.amount;
-        playerGold.AddGold(/*aux*/itemToSell.data.goldValue * quantitySold);
+        playerGold.AddGold(/*aux*/itemToSell.GetItemValue() * quantitySold);
 
         //TODO: Make items sold by the player appear as a separate item on the list that could be rebought in case of accidentally selling
         /*aux*/

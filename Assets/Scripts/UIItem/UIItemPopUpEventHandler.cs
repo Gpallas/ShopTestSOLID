@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,9 +17,7 @@ public class UIItemPopUpEventHandler : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnDeselect(BaseEventData eventData)
     {
-        //Call Pop Up Hide
         onDeselectAction?.Invoke();
-        Debug.Log(gameObject.name + " Deselected");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -36,9 +32,7 @@ public class UIItemPopUpEventHandler : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnSelect(BaseEventData eventData)
     {
-        //Call Pop Up Construction
         onSelectAction?.Invoke();
-        Debug.Log(gameObject.name + " Selected");
     }
 
     public void AddOnSelectAction(Action actionToTrigger)

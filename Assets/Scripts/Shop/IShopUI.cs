@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface IShopUI
 {
+    void ReceiveTradeInterface(ITradeItem tradeInterfaceRef);
     void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv);
 
     void PopulatePlayerMenu(IInventoryAccess playerInv);

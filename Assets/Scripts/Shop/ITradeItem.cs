@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public interface ITradeItem
+﻿public interface ITradeItem
 {
     void BuyItem(Item itemToBuy);
     void SellItem(Item itemToSell);

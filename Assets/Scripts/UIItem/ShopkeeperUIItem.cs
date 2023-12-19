@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +19,7 @@ public class ShopkeeperUIItem : UIItem
     {
         image.sprite = item.data.image;
         itemName.text = item.data.itemName;
-        itemCost.text = item.data.goldValue.ToString();
+        itemCost.text = item.GetItemValue().ToString();
         if (item.isPlayerItem)
         {
             resellIcon.SetActive(true);

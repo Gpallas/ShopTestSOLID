@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopkeeperInventory : MonoBehaviour, IInventoryAccess
 {
     List<Item> itemList;
 
-    public List<Item> testList;
+    [SerializeField]
+    List<Item> testList;
 
     void Start()
     {
@@ -99,7 +99,7 @@ public class ShopkeeperInventory : MonoBehaviour, IInventoryAccess
         int aux = IndexOfFirst(dataRef);
         if (IsListIndexValid(aux))
         {
-            return itemList[aux];
+            return new Item(itemList[aux]);
         }
         return null;
     }

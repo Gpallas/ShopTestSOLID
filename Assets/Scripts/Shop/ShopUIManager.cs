@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,10 +6,10 @@ using UnityEngine.UI;
 
 public class ShopUIManager : MonoBehaviour, IShopUI
 {
+    const int maxItemsDisplayedOnAPage = 4;
+
     [SerializeField]
     GameObject popUpGO;
-    [SerializeField]
-    GameObject shopManagerGO;
     IPopUpInfo popUpRef;
     ITradeItem shopManagerRef;
 
@@ -44,7 +43,11 @@ public class ShopUIManager : MonoBehaviour, IShopUI
     void Awake()
     {
         popUpGO.TryGetComponent(out popUpRef);
-        shopManagerGO.TryGetComponent(out shopManagerRef);
+    }
+
+    public void ReceiveTradeInterface(ITradeItem tradeInterfaceRef)
+    {
+        shopManagerRef = tradeInterfaceRef;
     }
 
     public void PopulateShopkeeperMenu(IInventoryAccess shopkeeperInv)
@@ -61,7 +64,7 @@ public class ShopUIManager : MonoBehaviour, IShopUI
             }
         }
 
-        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - 4;
+        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - (maxItemsDisplayedOnAPage - 1);
     }
 
     public void PopulatePlayerMenu(IInventoryAccess playerInv)
@@ -71,16 +74,6 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         for (int i = 0; i < playerInv.GetListCount(); i++)
         {
             Item aux = playerInv.GetItemAtIndex(i);
-            /*if (aux != null)
-            {
-                if (aux.data.canSell)
-                {
-                    InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
-                    continue;
-                }
-            }*/
-
-            //InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
 
             InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
         }
@@ -93,6 +86,7 @@ public class ShopUIManager : MonoBehaviour, IShopUI
             Destroy(g.Value);
         }
         shopkeeperItems.Clear();
+
         foreach (KeyValuePair<int, GameObject> g in playerItems)
         {
             Destroy(g.Value);
@@ -112,35 +106,6 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         for (int i=0; i<playerInv.GetListCount(); i++)
         {
             Item aux = playerInv.GetItemAtIndex(i);
-            //if (aux != null)
-            //{
-            //    if (playerItems.ContainsKey(i))
-            //    {
-            //        if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
-            //        {
-            //            updateInterface.UpdateItem(aux);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (aux.data.canSell)
-            //        {
-            //            InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, shopManagerRef.SellItem, i, playerItemPopUpConstructor.ConstructPopUpWithGold);
-            //        }
-            //        else
-            //        {
-            //            InstantiateItem(aux, playerItemPrefab, playerItemParent, ref playerItems, /*onSubmitAction = */null, i, /*popUpContructor = */null);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    if (playerItems.ContainsKey(i))
-            //    {
-            //        Destroy(playerItems[i]);
-            //        playerItems.Remove(i);
-            //    }
-            //}
 
             if (playerItems[i].TryGetComponent(out IUpdateItem updateInterface))
             {
@@ -179,7 +144,7 @@ public class ShopUIManager : MonoBehaviour, IShopUI
             }
         }
 
-        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - 3;
+        shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - (maxItemsDisplayedOnAPage - 1);
     }
 
     public void SwitchVisibility(bool newVisibility)

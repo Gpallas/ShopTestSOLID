@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GoldHandler : MonoBehaviour, IGoldAccess
 {
@@ -15,7 +14,7 @@ public class GoldHandler : MonoBehaviour, IGoldAccess
     void LoadGoldAmount()
     {
         // Gets value from some save file
-        currentGold = 0;
+        currentGold = 30000;
     }
 
     public void AddGold(int amount)

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
-//DEPRECATED. UIItemSubmitInputAction ficou com a base dessa funcionalidade do OnSelect e tals e ShopPlayerItemSubmitInputAction ficou com a funcionalidade de fato de quando os InputActions são chamados
+//DEPRECATED. UIItemSubmitInputAction kept the OnSelect and OnDeselect functionalities and it's child classes implement the OnSubmit and press logic
 public class ShopUIItemSubmitEventHandler : MonoBehaviour, ISubmitActionItem, ISelectHandler, IDeselectHandler, IUpdateItem
 {
     Action<Item> onSubmitAction;
@@ -15,7 +13,6 @@ public class ShopUIItemSubmitEventHandler : MonoBehaviour, ISubmitActionItem, IS
     InputAction test;
     InputAction test2;
 
-    //Preciso fazer com que esses dois métodos sejam adicionados e removidos dinamicamente do PlayerInput, já que o InpuSystemUIInputModule tem uma limitação de não poder adicionar Actions extras
 
     public void SubmitAllPressed(InputAction.CallbackContext context)
     {

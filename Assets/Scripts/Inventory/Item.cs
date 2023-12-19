@@ -3,6 +3,8 @@
 [Serializable]
 public class Item
 {
+    const int playerItemValueModifier = 2;
+
     public ItemData data;
     public int amount;
     public bool isPlayerItem;
@@ -81,6 +83,23 @@ public class Item
         amount = (amountToRemove > amount) ? 0 : amount - amountToRemove;
 
         return (amount > 0);
+    }
+
+    public int GetItemValue(bool valueOfAllStack = false, bool considerPlayerItemValue = true)
+    {
+        int value = data.goldValue;
+        if (valueOfAllStack)
+        {
+            value *= amount;
+        }
+        if (considerPlayerItemValue)
+        {
+            if (isPlayerItem)
+            {
+                value /= playerItemValueModifier;
+            }
+        }
+        return value;
     }
 
     public override bool Equals(object other)

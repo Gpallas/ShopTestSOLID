@@ -19,7 +19,7 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     protected override void Initialize()
     {
-        actionsDictionary = new Dictionary<string, System.Action<InputAction.CallbackContext>>
+        actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
         {
             { SingleSubmit, OnSubmitSingle },
             { MultipleSubmit, OnSubmitMultiple },
@@ -61,7 +61,6 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
         else if (inputActionName == AllSubmit || inputActionName == MultipleAllSubmit)
         {
             return;
-            //GetAmount = AllItemAmount;
         }
         else
         {
@@ -69,7 +68,7 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
             return;
         }
 
-        if (currentPhase == InputActionPhase.Started)// || (currentPhase == InputActionPhase.Performed && (inputActionName == AllSubmit || inputActionName == MultipleAllSubmit)))
+        if (currentPhase == InputActionPhase.Started)
         {
             SubmitStart(GetAmount());
         }

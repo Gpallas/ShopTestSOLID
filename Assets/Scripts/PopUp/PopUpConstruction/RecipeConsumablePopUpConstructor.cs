@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
+//Maybe this could be a child of RecipeItemPopUpConstructor
 [CreateAssetMenu(menuName = "ScriptableObject/PopUpConstructor/Recipe For Consumable")]
 public class RecipeConsumablePopUpConstructor : BasePopUpConstructor
 {

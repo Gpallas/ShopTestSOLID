@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObject/ItemData/Item With Effect")]
 public class EffectItemData : ItemData
@@ -26,6 +24,7 @@ public class EffectItemData : ItemData
             {
                 effect = "-";
             }
+            //e.g. allEffects[0] -> value = -3, typePurpose = damage received. string effect == "-3 DAMAGE RECEIVED"
             effect += allEffects[i].value + " " + allEffects[i].typePurpose.ToUpper();
             data[i] = new EffectInfo(allEffects[i].icon, effect);
         }

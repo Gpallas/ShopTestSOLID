@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObject/ItemData/Recipe For Item With Effect")]
 public class RecipeEffectItemData : ItemData

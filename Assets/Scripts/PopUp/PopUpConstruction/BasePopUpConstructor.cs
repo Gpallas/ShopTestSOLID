@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class BasePopUpConstructor : ScriptableObject
 {
@@ -19,7 +18,6 @@ public abstract class BasePopUpConstructor : ScriptableObject
     protected abstract void BuildPopUp(IPopUpInfo popUpRef, Item itemRef);
     protected virtual void BuildGoldEntry(IPopUpInfo popUpRef, Item itemRef)
     {
-        int value = (itemRef.isPlayerItem) ? itemRef.data.goldValue / 2 : itemRef.data.goldValue;
-        popUpRef.AddGoldAmount(value);
+        popUpRef.AddGoldAmount(itemRef.GetItemValue());
     }
 }

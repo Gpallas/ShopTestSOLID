@@ -19,7 +19,7 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     protected override void Initialize()
     {
-        actionsDictionary = new Dictionary<string, System.Action<InputAction.CallbackContext>>
+        actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
         {
             { SingleSubmit, OnSubmitSingle },
             { MultipleSubmit, OnSubmitMultiple },

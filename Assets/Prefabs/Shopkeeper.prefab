@@ -73,7 +73,7 @@ MonoBehaviour:
     amount: 0
     isPlayerItem: 0
     id: -1
-  - data: {fileID: 11400000, guid: b313f86741a9c3544be1e3e9f6b62f78, type: 2}
+  - data: {fileID: 11400000, guid: 2fefb43874d33384eace7c54edc78461, type: 2}
     amount: 0
     isPlayerItem: 0
     id: -1

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public interface IInventoryAccess
 {
@@ -32,16 +30,6 @@ public interface IInventoryAccess
     /// Returns -1 if item not valid. Returns 0 if no amount was left. Otherwise, returns amount left
     /// </returns>
     int RemoveItemAmount(Item itemToRemove, int amountToRemove);
-    /*
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="itemIndex"></param>
-    /// <param name="amountToRemove"></param>
-    /// <returns>
-    /// Returns -1 if item index not valid. Returns 0 if no amount was left. Otherwise, returns amount left
-    /// </returns>
-    int RemoveItemAmount(int itemIndex, int amountToRemove);*/
 
     void SwapItems(int firstIndex, int secondIndex);
 }

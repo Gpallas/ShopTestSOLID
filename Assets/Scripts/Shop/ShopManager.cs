@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class ShopManager : MonoBehaviour, ITradeItem
 {
@@ -13,7 +11,6 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
     IGoldAccess playerGold;
 
-    //MyPlayerInput inputComponent;
     IStateAccess playerState;
 
     void Start()
@@ -26,9 +23,6 @@ public class ShopManager : MonoBehaviour, ITradeItem
         }
 
         shopUIGO.TryGetComponent(out shopUIRef);
-        /*
-        inputComponent = FindAnyObjectByType<MyPlayerInput>();
-        playerState = FindAnyObjectByType<PlayerStateManager>();*/
     }
 
     void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage, IStateAccess stateInterface)
@@ -38,12 +32,11 @@ public class ShopManager : MonoBehaviour, ITradeItem
         playerGold = goldInterface;
 
         shopUIRef.SwitchVisibility(/*newVisibility = */true);
+        shopUIRef.ReceiveTradeInterface(this);
         shopUIRef.FillBaseInfo(shopkeeperSprite, shopkeeperMessage, playerGold.GetCurrentGold());
         shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory);
         shopUIRef.PopulatePlayerMenu(playerInventory);
 
-        //inputComponent.SwitchActionMap(MyPlayerInput.myUIMapName);
-        /////////////Pensar como pegar a referencia do playerState ou se deixa o PlayerStateManager um singleton
         playerState = stateInterface;
         playerState.ChangeState(EPlayerState.OnShop);
     }
@@ -55,14 +48,13 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
         shopkeeperInventory.InitializeInventory();
 
-        //inputComponent.SwitchActionMap(MyPlayerInput.defaultMapName);
         playerState.ChangeState(EPlayerState.Default);
     }
 
     public void BuyItem(Item itemToBuy)
     {
         bool wasSold = itemToBuy.isPlayerItem;
-        int itemValue = (wasSold) ? itemToBuy.data.goldValue / 2 : itemToBuy.data.goldValue;
+        int itemValue = itemToBuy.GetItemValue();
 
         //Check if player has gold to buy one item
         if (playerGold.CheckHasEnoughGold(itemValue))
@@ -129,7 +121,7 @@ public class ShopManager : MonoBehaviour, ITradeItem
         //Success. Play "success" sound effect
 
         int quantitySold = (result == 0) ? priorQuantity : itemToSell.amount;
-        playerGold.AddGold(itemToSell.data.goldValue / 2 * quantitySold);
+        playerGold.AddGold(itemToSell.GetItemValue() * quantitySold);
 
         itemToSell.amount = quantitySold;
         itemToSell.isPlayerItem = true;
