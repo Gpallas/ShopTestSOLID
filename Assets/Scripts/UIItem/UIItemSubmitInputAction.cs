@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static Unity.Burst.Intrinsics.X86;
 
 public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     protected Dictionary<string, Action<InputAction.CallbackContext>> actionsDictionary;
     protected Action onSelect;
     protected Action onDeselect;
-    /*Ver a viabilidade de armazenar os InputActions ao invés de procurar toda vez que precisar usar
-    protected Dictionary<string, InputAction> inputActionsDictionary;*/
+    /*Ver a viabilidade de armazenar os InputActions ao invés de procurar toda vez que precisar usar*/
+    protected Dictionary<InputAction, Action<InputAction.CallbackContext>> inputDictionary;
 
     void Awake()
     {
@@ -36,7 +38,7 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
 
     void SubscribeActions()
     {
-        PlayerInput input = FindAnyObjectByType<PlayerInput>();
+        /*PlayerInput input = FindAnyObjectByType<PlayerInput>();
 
         foreach (KeyValuePair<string, Action<InputAction.CallbackContext>> action in actionsDictionary)
         {
@@ -50,19 +52,24 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
             {
                 HandleInputActionAlreadyActive(aux.phase, action.Key);
             }
-        }
-        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar
-        foreach (KeyValuePair<string, InputAction> iterator in inputActionsDictionary)
-        {
-            inputActionsDictionary[iterator.Key].started += actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].performed += actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].canceled += actionsDictionary[iterator.Key];
         }*/
+        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar*/
+        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputDictionary)
+        {
+            pair.Key.started += pair.Value;
+            pair.Key.performed += pair.Value;
+            pair.Key.canceled += pair.Value;
+
+            if (pair.Key.IsInProgress())
+            {
+                HandleInputActionAlreadyActive(pair.Key.phase, pair.Key.name);
+            }
+        }
     }
 
     void UnsubscribeActions()
     {
-        PlayerInput input = FindAnyObjectByType<PlayerInput>();
+        /*PlayerInput input = FindAnyObjectByType<PlayerInput>();
 
         if (input)
         {
@@ -74,14 +81,14 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
                 aux.performed -= actionsDictionary[action.Key];
                 aux.canceled -= actionsDictionary[action.Key];
             }
-        }
-        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar
-        foreach (KeyValuePair<string, InputAction> iterator in inputActionsDictionary)
-        {
-            inputActionsDictionary[iterator.Key].started -= actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].performed -= actionsDictionary[iterator.Key];
-            inputActionsDictionary[iterator.Key].canceled -= actionsDictionary[iterator.Key];
         }*/
+        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar*/
+        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputDictionary)
+        {
+            pair.Key.started -= pair.Value;
+            pair.Key.performed -= pair.Value;
+            pair.Key.canceled -= pair.Value;
+        }
     }
 
     void OnDestroy()

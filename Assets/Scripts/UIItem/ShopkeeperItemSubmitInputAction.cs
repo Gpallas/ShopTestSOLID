@@ -19,12 +19,20 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     protected override void Initialize()
     {
-        actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
+        /*actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
         {
             { SingleSubmit, OnSubmitSingle },
             { MultipleSubmit, OnSubmitMultiple },
             { AllSubmit, OnSubmitSingle },
             { MultipleAllSubmit, OnSubmitMultiple }
+        };*/
+        PlayerInput inputComponent = FindAnyObjectByType<PlayerInput>();
+        inputDictionary = new Dictionary<InputAction, Action<InputAction.CallbackContext>>
+        {
+            { inputComponent.actions[SingleSubmit], OnSubmitSingle },
+            { inputComponent.actions[MultipleSubmit], OnSubmitMultiple },
+            { inputComponent.actions[AllSubmit], OnSubmitSingle },
+            { inputComponent.actions[MultipleAllSubmit], OnSubmitMultiple }
         };
 
         onDeselect += StopAll;
