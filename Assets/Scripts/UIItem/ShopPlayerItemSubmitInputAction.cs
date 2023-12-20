@@ -11,6 +11,7 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
     const string AllSubmit = "SubmitAll";
     const string MultipleAllSubmit = "SubmitMultipleAll";
     const float WaitTime = 1f;
+    const float InitialWaitTime = 0.5f;
 
     Action<Item> onSubmitAction;
     Item item;
@@ -19,15 +20,8 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     protected override void Initialize()
     {
-        /*actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
-        {
-            { SingleSubmit, OnSubmitSingle },
-            { MultipleSubmit, OnSubmitMultiple },
-            { AllSubmit, OnSubmitAll },
-            { MultipleAllSubmit, OnSubmitAll }
-        };*/
         PlayerInput inputComponent = FindAnyObjectByType<PlayerInput>();
-        inputDictionary = new Dictionary<InputAction, Action<InputAction.CallbackContext>>
+        inputActionDictionary = new Dictionary<InputAction, Action<InputAction.CallbackContext>>
         {
             { inputComponent.actions[SingleSubmit], OnSubmitSingle },
             { inputComponent.actions[MultipleSubmit], OnSubmitMultiple },
@@ -35,7 +29,7 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
             { inputComponent.actions[MultipleAllSubmit], OnSubmitAll }
         };
 
-        onDeselect += StopAllCoroutines;
+        onDeselect += StopAll;
         allCoroutines = new Dictionary<string, Coroutine>();
     }
 
@@ -139,7 +133,10 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
     {
         if (item != null)
         {
-            allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+            if (!allCoroutines.ContainsKey(inputName))
+            {
+                allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+            }
         }
     }
 
@@ -163,13 +160,22 @@ public class ShopPlayerItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     IEnumerator SubmitLoop(Func<int> GetAmount)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(InitialWaitTime);
         while(true)
         {
             item.amount = GetAmount();
             onSubmitAction?.Invoke(item);
             yield return new WaitForSeconds(WaitTime);
         }
+    }
+
+    void StopAll()
+    {
+        foreach (KeyValuePair<string, Coroutine> pair in allCoroutines)
+        {
+            StopCoroutine(pair.Value);
+        }
+        allCoroutines.Clear();
     }
 
     public void UpdateItem(Item newItem)

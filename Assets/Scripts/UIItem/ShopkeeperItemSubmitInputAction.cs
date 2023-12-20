@@ -11,6 +11,7 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
     const string AllSubmit = "SubmitAll";
     const string MultipleAllSubmit = "SubmitMultipleAll";
     const float WaitTime = 1f;
+    const float InitialWaitTime = 0.5f;
 
     Action<Item> onSubmitAction;
     Item item;
@@ -19,15 +20,8 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     protected override void Initialize()
     {
-        /*actionsDictionary = new Dictionary<string, Action<InputAction.CallbackContext>>
-        {
-            { SingleSubmit, OnSubmitSingle },
-            { MultipleSubmit, OnSubmitMultiple },
-            { AllSubmit, OnSubmitSingle },
-            { MultipleAllSubmit, OnSubmitMultiple }
-        };*/
         PlayerInput inputComponent = FindAnyObjectByType<PlayerInput>();
-        inputDictionary = new Dictionary<InputAction, Action<InputAction.CallbackContext>>
+        inputActionDictionary = new Dictionary<InputAction, Action<InputAction.CallbackContext>>
         {
             { inputComponent.actions[SingleSubmit], OnSubmitSingle },
             { inputComponent.actions[MultipleSubmit], OnSubmitMultiple },
@@ -117,7 +111,10 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     void SubmitPerformed(Func<int> GetAmount, string inputName)
     {
-        allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+        if (!allCoroutines.ContainsKey(inputName))
+        {
+            allCoroutines.Add(inputName, StartCoroutine(SubmitLoop(GetAmount)));
+        }
     }
 
     void SubmitCancelled(string inputName)
@@ -137,7 +134,7 @@ public class ShopkeeperItemSubmitInputAction : UIItemSubmitInputAction, ISubmitA
 
     IEnumerator SubmitLoop(Func<int> GetAmount)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(InitialWaitTime);
         while (true)
         {
             item.amount = GetAmount();

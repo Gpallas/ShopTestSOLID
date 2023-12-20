@@ -8,11 +8,9 @@ using static Unity.Burst.Intrinsics.X86;
 
 public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
-    protected Dictionary<string, Action<InputAction.CallbackContext>> actionsDictionary;
     protected Action onSelect;
     protected Action onDeselect;
-    /*Ver a viabilidade de armazenar os InputActions ao invés de procurar toda vez que precisar usar*/
-    protected Dictionary<InputAction, Action<InputAction.CallbackContext>> inputDictionary;
+    protected Dictionary<InputAction, Action<InputAction.CallbackContext>> inputActionDictionary;
 
     void Awake()
     {
@@ -38,23 +36,7 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
 
     void SubscribeActions()
     {
-        /*PlayerInput input = FindAnyObjectByType<PlayerInput>();
-
-        foreach (KeyValuePair<string, Action<InputAction.CallbackContext>> action in actionsDictionary)
-        {
-            InputAction aux = input.actions.FindAction(action.Key);
-
-            aux.started += actionsDictionary[action.Key];
-            aux.performed += actionsDictionary[action.Key];
-            aux.canceled += actionsDictionary[action.Key];
-
-            if (aux.IsInProgress())
-            {
-                HandleInputActionAlreadyActive(aux.phase, action.Key);
-            }
-        }*/
-        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar*/
-        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputDictionary)
+        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputActionDictionary)
         {
             pair.Key.started += pair.Value;
             pair.Key.performed += pair.Value;
@@ -69,21 +51,7 @@ public abstract class UIItemSubmitInputAction : MonoBehaviour, ISelectHandler, I
 
     void UnsubscribeActions()
     {
-        /*PlayerInput input = FindAnyObjectByType<PlayerInput>();
-
-        if (input)
-        {
-            foreach (KeyValuePair<string, Action<InputAction.CallbackContext>> action in actionsDictionary)
-            {
-                InputAction aux = input.actions.FindAction(action.Key);
-
-                aux.started -= actionsDictionary[action.Key];
-                aux.performed -= actionsDictionary[action.Key];
-                aux.canceled -= actionsDictionary[action.Key];
-            }
-        }*/
-        /*Deixar assim se for mais performático armazenar os InputActions ao inicializar ao invés de ter que procurar toda vez que precisar acessar*/
-        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputDictionary)
+        foreach (KeyValuePair<InputAction, Action<InputAction.CallbackContext>> pair in inputActionDictionary)
         {
             pair.Key.started -= pair.Value;
             pair.Key.performed -= pair.Value;
