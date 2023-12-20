@@ -1034,7 +1034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popUpGO: {fileID: 0}
-  shopManagerGO: {fileID: 0}
   shopUIGameObject: {fileID: 6116728860440587789}
   shopItemParent: {fileID: 2989635053169971436}
   shopItemScrollbar: {fileID: 6973770329328901452}
@@ -1253,7 +1252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1352,7 +1351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8887548689342542317}
   - component: {fileID: 1840157031925289571}
-  - component: {fileID: 7354782997516122717}
+  - component: {fileID: 6163304477342371280}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -1389,7 +1388,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8572302652460965422}
   m_CullTransparentMesh: 1
---- !u!114 &7354782997516122717
+--- !u!114 &6163304477342371280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1398,7 +1397,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8572302652460965422}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a4e9ea3ee7c85340bf629829164586f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 2989635053169971436}
@@ -1412,10 +1411,10 @@ MonoBehaviour:
   m_Viewport: {fileID: 7885773863848128366}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 6973770329328901452}
-  m_HorizontalScrollbarVisibility: 2
+  m_HorizontalScrollbarVisibility: 0
   m_VerticalScrollbarVisibility: 1
-  m_HorizontalScrollbarSpacing: -3
-  m_VerticalScrollbarSpacing: -3
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
