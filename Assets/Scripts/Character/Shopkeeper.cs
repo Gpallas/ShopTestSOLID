@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Shopkeeper : ShopMenuCaller, IInteractable
 {
@@ -13,7 +14,7 @@ public class Shopkeeper : ShopMenuCaller, IInteractable
 
     GameObject playerObj;
 
-    public override void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string, IStateAccess> openMenuMethod)
+    public override void SetOpenMenuDelegate(Action<IInventoryAccess, IInventoryAccess, IGoldAccess, Sprite, string, IStateAccess<EPlayerState>> openMenuMethod)
     {
         menuCaller = openMenuMethod;
     }
@@ -26,7 +27,7 @@ public class Shopkeeper : ShopMenuCaller, IInteractable
             DialogSystem.instance.StartDialog(dialogBeforeShop);
             DialogSystem.instance.onDialogEnd += OpenMenu;
 
-            if (interactorGO.TryGetComponent(out IStateAccess playerState))
+            if (interactorGO.TryGetComponent(out IStateAccess<EPlayerState> playerState))
             {
                 playerState.ChangeState(EPlayerState.Interacting);
             }
@@ -41,18 +42,21 @@ public class Shopkeeper : ShopMenuCaller, IInteractable
     void OpenMenu()
     {
         DialogSystem.instance.onDialogEnd -= OpenMenu;
-        if (playerObj.TryGetComponent(out IInventoryAccess playerinv))
+        if (playerObj.TryGetComponent(out IStateAccess<EPlayerState> playerState))
         {
             if (playerObj.TryGetComponent(out IGoldAccess playerGold))
             {
-                if (playerObj.TryGetComponent(out IStateAccess playerState))
+                if (playerObj.TryGetComponent(out IInventoryAccess playerinv))
                 {
                     if (TryGetComponent(out IInventoryAccess shopInv))
                     {
                         menuCaller?.Invoke(playerinv, shopInv, playerGold, shopIcon, shopMessage, playerState);
+                        return;
                     }
                 }
             }
+            //If can't find the necessary interfaces to open the menu, change state back to Default so player can act normally
+            playerState.ChangeState(EPlayerState.Default);
         }
     }
 }

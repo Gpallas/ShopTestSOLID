@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.Windows;
+﻿using UnityEngine;
 
 public class Movement : MonoBehaviour, IMovementInfo
 {

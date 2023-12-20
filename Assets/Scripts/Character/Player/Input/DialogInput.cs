@@ -1,14 +1,17 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class DialogInput : MonoBehaviour
 {
     InputAction skipAction;
 
-    void Start()
+    void Awake()
     {
         InputAssigner.assignCaller += Initialize;
+    }
+
+    void Start()
+    {
         DialogSystem.instance.onDialogStart += DialogStarted;
         DialogSystem.instance.onDialogEnd += DialogEnded;
     }
@@ -26,6 +29,7 @@ public class DialogInput : MonoBehaviour
 
     void DialogStarted()
     {
+        //Necessary to do this, since skip and interact use the same button. I tried Disabling when not in use and only Enabling here, but it seems on map switch it also reenables
         skipAction.Disable();
         skipAction.performed += Skip;
         skipAction.Enable();

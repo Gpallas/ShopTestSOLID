@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Interact : MonoBehaviour, IInteractor
 {
@@ -50,7 +49,6 @@ public class Interact : MonoBehaviour, IInteractor
             {
                 if (hit.collider.gameObject.TryGetComponent(out IInteractable interactable))
                 {
-                    //No objeto que interagir tem que fazer a mudança de estado do player
                     interactable.TryInteract(interactorGO);
                 }
             }

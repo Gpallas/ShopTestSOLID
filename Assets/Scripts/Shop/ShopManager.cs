@@ -11,7 +11,7 @@ public class ShopManager : MonoBehaviour, ITradeItem
 
     IGoldAccess playerGold;
 
-    IStateAccess playerState;
+    IStateAccess<EPlayerState> playerState;
 
     void Start()
     {
@@ -25,15 +25,15 @@ public class ShopManager : MonoBehaviour, ITradeItem
         shopUIGO.TryGetComponent(out shopUIRef);
     }
 
-    void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopkeeperInvInterface, IGoldAccess goldInterface, Sprite shopkeeperSprite, string shopkeeperMessage, IStateAccess stateInterface)
+    void OpenMenu(IInventoryAccess playerInvInterface, IInventoryAccess shopInvInterface, IGoldAccess goldInterface, Sprite shopSprite, string shopMessage, IStateAccess<EPlayerState> stateInterface)
     {
         playerInventory = playerInvInterface;
-        shopkeeperInventory = shopkeeperInvInterface;
+        shopkeeperInventory = shopInvInterface;
         playerGold = goldInterface;
 
         shopUIRef.SwitchVisibility(/*newVisibility = */true);
         shopUIRef.ReceiveTradeInterface(this);
-        shopUIRef.FillBaseInfo(shopkeeperSprite, shopkeeperMessage, playerGold.GetCurrentGold());
+        shopUIRef.FillBaseInfo(shopSprite, shopMessage, playerGold.GetCurrentGold());
         shopUIRef.PopulateShopkeeperMenu(shopkeeperInventory);
         shopUIRef.PopulatePlayerMenu(playerInventory);
 

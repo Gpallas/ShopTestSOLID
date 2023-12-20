@@ -14,18 +14,6 @@ public class InputAssigner : MonoBehaviour
     {
         assignCaller?.Invoke(inputComponent);
     }
-    /*
-    void OnEnable()
-    {
-        if (!isFirstTime)
-        {
-            assignCaller?.Invoke(inputComponent);
-        }
-        else
-        {
-            isFirstTime = false;
-        }
-    }*/
 
     void OnDisable()
     {

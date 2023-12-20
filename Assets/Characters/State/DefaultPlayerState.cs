@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DefaultPlayerState : StateMachineBehaviour
@@ -7,17 +5,20 @@ public class DefaultPlayerState : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        IMovementInfo info;
-        animator.gameObject.TryGetComponent(out info);
-        info.SetCanMove(true);
+        if (animator.gameObject.TryGetComponent(out IMovementInfo info))
+        {
+            info.SetCanMove(true);
+        }
 
-        MyPlayerInput myInput;
-        animator.gameObject.TryGetComponent(out myInput);
-        myInput.SwitchActionMap(MyPlayerInput.defaultMapName);
+        if (animator.gameObject.TryGetComponent(out MyPlayerInput myInput))
+        {
+            myInput.SwitchActionMap(MyPlayerInput.defaultMapName);
+        }
         
-        IInteractor interact;
-        animator.gameObject.TryGetComponent(out interact);
-        interact.SetCanInteract(true);
+        if (animator.gameObject.TryGetComponent(out IInteractor interact))
+        {
+            interact.SetCanInteract(true);
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

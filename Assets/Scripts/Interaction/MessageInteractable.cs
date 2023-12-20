@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MessageInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField]
     string[] messageList;
 
-    IStateAccess playerState;
+    IStateAccess<EPlayerState> playerState;
 
     public bool TryInteract(GameObject interactorGO)
     {

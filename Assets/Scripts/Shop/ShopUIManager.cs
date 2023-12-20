@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShopUIManager : MonoBehaviour, IShopUI
@@ -65,6 +66,8 @@ public class ShopUIManager : MonoBehaviour, IShopUI
         }
 
         shopItemScrollbar.numberOfSteps = shopkeeperItems.Count - (maxItemsDisplayedOnAPage - 1);
+        //Talvez isso faça o controle funcionar quando abrir a loja
+        //EventSystem.current.SetSelectedGameObject(scrollRect.gameObject);
     }
 
     public void PopulatePlayerMenu(IInventoryAccess playerInv)
