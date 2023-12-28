@@ -17,7 +17,7 @@ MonoBehaviour:
   description: A thick coat for the winter
   goldValue: 150
   canSell: 1
-  category: {fileID: 11400000, guid: 93ba957d130296e468d116562136278f, type: 2}
+  category: {fileID: 11400000, guid: 7a565b9dbcf1c0a4e839077f888e3772, type: 2}
   stackable: 1
   stackLimit: 999
   constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}

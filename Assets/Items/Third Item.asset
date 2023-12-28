@@ -17,7 +17,7 @@ MonoBehaviour:
   description: Shoes so light, you'll feel like you're flying
   goldValue: 50
   canSell: 1
-  category: {fileID: 11400000, guid: eb3e1ac69c40c1c43a120267bed0149e, type: 2}
+  category: {fileID: 11400000, guid: 7a565b9dbcf1c0a4e839077f888e3772, type: 2}
   stackable: 1
   stackLimit: 4
   constructorRef: {fileID: 11400000, guid: 2be8d18d5bade0b4aa40262d40e57677, type: 2}
