@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8082fadd330226040b9c98d5dc25c72e, type: 3}
   m_Name: New Item
   m_EditorClassIdentifier: 
-  image: {fileID: -7325896122416227374, guid: 9f510b71574005848a89186b94d833c4, type: 3}
-  itemName: New Item
-  description: Some quick description
+  image: {fileID: 7791546944473755633, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  itemName: Lamp
+  description: The say you can have your wishes made true with it. Don't we all wish
+    for that?
   goldValue: 34
   canSell: 1
   category: {fileID: 11400000, guid: 7d2bc4acbf8c30c48ab4a2519b3d6ee6, type: 2}

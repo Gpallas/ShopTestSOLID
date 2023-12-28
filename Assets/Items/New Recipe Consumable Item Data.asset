@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63374b34805057540b9577c10b5c66c4, type: 3}
   m_Name: New Recipe Consumable Item Data
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  itemName: Recipe for Consumable
-  description: Some short description
+  image: {fileID: 6813030398132046770, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  itemName: Crafting Potion (Recipe)
+  description: Not only does it free your creativity, it's also good for your health!
   goldValue: 5040
   canSell: 0
   category: {fileID: 11400000, guid: eb3e1ac69c40c1c43a120267bed0149e, type: 2}
@@ -22,12 +22,12 @@ MonoBehaviour:
   stackLimit: 2
   constructorRef: {fileID: 11400000, guid: ec011aaa9977e7a418494a47c896d09a, type: 2}
   allIngredients:
-  - typePurpose: SecondItem
+  - typePurpose: Beer
     value: 15
-    icon: {fileID: 8740688317848579606, guid: 9f510b71574005848a89186b94d833c4, type: 3}
-  - typePurpose: Third Item
+    icon: {fileID: 9177024149995794355, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  - typePurpose: Alchemical Base
     value: 4
-    icon: {fileID: 6187108816858757141, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+    icon: {fileID: 6013365672529881382, guid: 9f510b71574005848a89186b94d833c4, type: 3}
   allEffects:
   - typePurpose: heal
     value: 15

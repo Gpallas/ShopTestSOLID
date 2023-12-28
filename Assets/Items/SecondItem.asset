@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8082fadd330226040b9c98d5dc25c72e, type: 3}
   m_Name: SecondItem
   m_EditorClassIdentifier: 
-  image: {fileID: 8740688317848579606, guid: 9f510b71574005848a89186b94d833c4, type: 3}
-  itemName: SecondItem Name
-  description: Some random description that is long enough to test how teh UI handles
-    long text
+  image: {fileID: -4118926140845056336, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  itemName: Heavy Coat
+  description: A thick coat for the winter
   goldValue: 150
   canSell: 1
   category: {fileID: 11400000, guid: 93ba957d130296e468d116562136278f, type: 2}

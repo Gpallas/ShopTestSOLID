@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c34533dac20394fbd17d0484c781b9, type: 3}
   m_Name: New Range Item Data
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
-  itemName: ASDF
-  description: RGDFGERGO  qeiwfjpigj effg  ohs gisugh igh fsg piurewyrtg yrou dyfuyad
-    fuya dfouyadg fuoady gfouasdygf oasd ygf
+  image: {fileID: -3004907982711716342, guid: 9f510b71574005848a89186b94d833c4, type: 3}
+  itemName: Rapier
+  description: Light and elegant, the perfect choice if you expect trouble when going
+    for groceries
   goldValue: 450
   canSell: 1
-  category: {fileID: 11400000, guid: 93ba957d130296e468d116562136278f, type: 2}
+  category: {fileID: 11400000, guid: 9a94727fdf4d32346b3eac09bfb89b2e, type: 2}
   stackable: 1
   stackLimit: 50
   constructorRef: {fileID: 11400000, guid: af4fd337524c70a4a9424fdfb64a9d85, type: 2}

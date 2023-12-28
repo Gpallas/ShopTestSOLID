@@ -448,6 +448,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1325986839559393115, guid: 23aae8e8ada5795459b789bdd36c41ce, type: 3}
+      propertyPath: testItems.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325986839559393115, guid: 23aae8e8ada5795459b789bdd36c41ce, type: 3}
+      propertyPath: testItems.Array.data[4].data
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b8d71685f87ee84490415a6aa30c72a, type: 2}
     - target: {fileID: 5259436123537981263, guid: 23aae8e8ada5795459b789bdd36c41ce, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1936,6 +1944,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shopkeeper
       objectReference: {fileID: 0}
+    - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: testList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: testList.Array.data[3].id
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: testList.Array.data[4].id
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: testList.Array.data[3].data
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b8d71685f87ee84490415a6aa30c72a, type: 2}
+    - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: testList.Array.data[4].data
+      value: 
+      objectReference: {fileID: 11400000, guid: a926da3f0e94cd6468ca627a2ea64f58, type: 2}
     - target: {fileID: 9021724625479070860, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.36

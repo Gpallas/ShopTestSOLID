@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 6187108816858757141, guid: 9f510b71574005848a89186b94d833c4, type: 3}
   itemName: Shoes
-  description: Shoes to walk around
+  description: Shoes so light, you'll feel like you're flying
   goldValue: 50
   canSell: 1
   category: {fileID: 11400000, guid: eb3e1ac69c40c1c43a120267bed0149e, type: 2}
