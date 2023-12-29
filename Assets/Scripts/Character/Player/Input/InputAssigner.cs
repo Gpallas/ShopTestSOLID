@@ -10,7 +10,7 @@ public class InputAssigner : MonoBehaviour
     public static event Action<PlayerInput> assignCaller;
     public static event Action unassignCaller;
 
-    void Start()
+    void OnEnable()
     {
         assignCaller?.Invoke(inputComponent);
     }

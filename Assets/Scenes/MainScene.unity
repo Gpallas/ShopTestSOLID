@@ -1944,6 +1944,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shopkeeper
       objectReference: {fileID: 0}
+    - target: {fileID: 5044811759560413927, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: 'dialogBeforeShop.Array.data[0]'
+      value: Hello there!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5044811759560413927, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
+      propertyPath: 'dialogBeforeShop.Array.data[1]'
+      value: What a lovely day it is outside, huh?
+      objectReference: {fileID: 0}
     - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: testList.Array.size
       value: 5
@@ -1963,15 +1971,15 @@ PrefabInstance:
     - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: testList.Array.data[2].data
       value: 
-      objectReference: {fileID: 11400000, guid: e64f039e81d9c18438e49bb61e5d1af2, type: 2}
+      objectReference: {fileID: 11400000, guid: 6b8d71685f87ee84490415a6aa30c72a, type: 2}
     - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: testList.Array.data[3].data
       value: 
-      objectReference: {fileID: 11400000, guid: 2fefb43874d33384eace7c54edc78461, type: 2}
+      objectReference: {fileID: 11400000, guid: e64f039e81d9c18438e49bb61e5d1af2, type: 2}
     - target: {fileID: 8523155560181426178, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: testList.Array.data[4].data
       value: 
-      objectReference: {fileID: 11400000, guid: 6b8d71685f87ee84490415a6aa30c72a, type: 2}
+      objectReference: {fileID: 11400000, guid: 2fefb43874d33384eace7c54edc78461, type: 2}
     - target: {fileID: 9021724625479070860, guid: e4778d7c9bf288f4daf38aa60d4521e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.36

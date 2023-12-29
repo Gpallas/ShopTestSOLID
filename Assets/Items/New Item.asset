@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 7791546944473755633, guid: 9f510b71574005848a89186b94d833c4, type: 3}
   itemName: Lamp
-  description: The say you can have your wishes made true with it. Don't we all wish
-    for that?
+  description: They say it can make your wishes come true. Don't we all wish for
+    that?
   goldValue: 34
   canSell: 1
   category: {fileID: 11400000, guid: 7d2bc4acbf8c30c48ab4a2519b3d6ee6, type: 2}
