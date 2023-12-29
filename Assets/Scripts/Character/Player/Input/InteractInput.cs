@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class InteractInput : MonoBehaviour
 {
+    const string InteractActionName = "Interact";
+
     InputAction interactAction;
 
     IInteractor interactor;
@@ -18,7 +20,7 @@ public class InteractInput : MonoBehaviour
     {
         if (interactAction == null)
         {
-            interactAction = inputComponent.actions["Interact"];
+            interactAction = inputComponent.actions[InteractActionName];
         }
 
         interactAction.performed += Interact;

@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class MovementInput : MonoBehaviour
 {
+    const string MoveActionName = "Move";
+
     InputAction movementAction;
 
     IMovementInfo movementInfo;
@@ -18,7 +20,7 @@ public class MovementInput : MonoBehaviour
     {
         if (movementAction == null)
         {
-            movementAction = inputComponent.actions["Move"];
+            movementAction = inputComponent.actions[MoveActionName];
         }
 
         movementAction.started += UpdateMovement;

@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class DialogInput : MonoBehaviour
 {
+    const string SkipDialogActionName = "SkipDialog";
+
     InputAction skipAction;
 
     void Awake()
@@ -18,7 +20,7 @@ public class DialogInput : MonoBehaviour
 
     void Initialize(PlayerInput inputComponent)
     {
-        skipAction = inputComponent.actions["SkipDialog"];
+        skipAction = inputComponent.actions[SkipDialogActionName];
         InputAssigner.assignCaller -= Initialize;
     }
 
